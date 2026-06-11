@@ -1,0 +1,16 @@
+{
+  "name": "BEH Oficinas y Mobiliario Corporativo",
+  "short_name": "BEH",
+  "description": "Mobiliario de oficina, divisiones, salas de juntas, suministro e instalación.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#15100d",
+  "theme_color": "#9f5f28",
+  "icons": [
+    {
+      "src": "/1x/solo%20bloque.png",
+      "sizes": "53x44",
+      "type": "image/png"
+    }
+  ]
+}

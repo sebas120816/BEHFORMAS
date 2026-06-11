@@ -1,0 +1,213 @@
+﻿Inicio: 22/06/2022 1:05 p. m.
+
+/public_html/assets/css/animate.min.css - iguales - no transferidos
+/public_html/assets/css/flaticon.css - iguales - no transferidos
+/public_html/assets/css/fontawesome-all.min.css - iguales - no transferidos
+/public_html/assets/css/magnific-popup.css - iguales - no transferidos
+/public_html/assets/css/main.css - iguales - no transferidos
+/public_html/assets/css/nice-select.css - iguales - no transferidos
+/public_html/assets/css/owl.carousel.min.css - iguales - no transferidos
+/public_html/assets/css/price_rangs.css - iguales - no transferidos
+/public_html/assets/css/responsive.css - iguales - no transferidos
+/public_html/assets/css/slick.css - iguales - no transferidos
+/public_html/assets/css/slicknav.css - iguales - no transferidos
+/public_html/assets/css/style.map - iguales - no transferidos
+/public_html/assets/css/themify-icons.css - iguales - no transferidos
+/public_html/assets/fonts/_flaticon.scss - iguales - no transferidos
+/public_html/assets/fonts/fa-brands-400.eot - iguales - no transferidos
+/public_html/assets/fonts/fa-brands-400.svg - iguales - no transferidos
+/public_html/assets/fonts/fa-brands-400.ttf - iguales - no transferidos
+/public_html/assets/fonts/fa-brands-400.woff - iguales - no transferidos
+/public_html/assets/fonts/fa-brands-400.woff2 - iguales - no transferidos
+/public_html/assets/fonts/fa-regular-400.eot - iguales - no transferidos
+/public_html/assets/fonts/fa-regular-400.svg - iguales - no transferidos
+/public_html/assets/fonts/fa-regular-400.ttf - iguales - no transferidos
+/public_html/assets/fonts/fa-regular-400.woff - iguales - no transferidos
+/public_html/assets/fonts/fa-regular-400.woff2 - iguales - no transferidos
+/public_html/assets/fonts/fa-solid-900.eot - iguales - no transferidos
+/public_html/assets/fonts/fa-solid-900.svg - iguales - no transferidos
+/public_html/assets/fonts/fa-solid-900.ttf - iguales - no transferidos
+/public_html/assets/fonts/fa-solid-900.woff - iguales - no transferidos
+/public_html/assets/fonts/fa-solid-900.woff2 - iguales - no transferidos
+/public_html/assets/fonts/Flaticon.eot - iguales - no transferidos
+/public_html/assets/fonts/flaticon.html - iguales - no transferidos
+/public_html/assets/fonts/Flaticon.svg - iguales - no transferidos
+/public_html/assets/fonts/Flaticon.ttf - iguales - no transferidos
+/public_html/assets/fonts/Flaticon.woff - iguales - no transferidos
+/public_html/assets/fonts/Flaticon.woff2 - iguales - no transferidos
+/public_html/assets/fonts/themify.eot - iguales - no transferidos
+/public_html/assets/fonts/themify.svg - iguales - no transferidos
+/public_html/assets/fonts/themify.ttf - iguales - no transferidos
+/public_html/assets/fonts/themify.woff - iguales - no transferidos
+/public_html/assets/img/about/about_lft.png - iguales - no transferidos
+/public_html/assets/img/about/about_right.png - iguales - no transferidos
+/public_html/assets/img/about/pet_care.png - iguales - no transferidos
+/public_html/assets/img/adapt_icon/1.png - iguales - no transferidos
+/public_html/assets/img/adapt_icon/1.svg - iguales - no transferidos
+/public_html/assets/img/adapt_icon/2.png - iguales - no transferidos
+/public_html/assets/img/adapt_icon/3.png - iguales - no transferidos
+/public_html/assets/img/banner/dog.png - iguales - no transferidos
+/public_html/assets/img/banner/img.png - iguales - no transferidos
+/public_html/assets/img/blog/author.png - iguales - no transferidos
+/public_html/assets/img/blog/learn_about_bg.png - iguales - no transferidos
+/public_html/assets/img/blog/single_blog_1.png - iguales - no transferidos
+/public_html/assets/img/blog/single_blog_2.png - iguales - no transferidos
+/public_html/assets/img/blog/single_blog_3.png - iguales - no transferidos
+/public_html/assets/img/blog/single_blog_4.png - iguales - no transferidos
+/public_html/assets/img/blog/single_blog_5.png - iguales - no transferidos
+/public_html/assets/img/blog/slide_thumb_1.png - iguales - no transferidos
+/public_html/assets/img/comment/comment_1.png - iguales - no transferidos
+/public_html/assets/img/comment/comment_2.png - iguales - no transferidos
+/public_html/assets/img/comment/comment_3.png - iguales - no transferidos
+/public_html/assets/img/elements/a.jpg - iguales - no transferidos
+/public_html/assets/img/elements/a2.jpg - iguales - no transferidos
+/public_html/assets/img/elements/d.jpg - iguales - no transferidos
+/public_html/assets/img/elements/disabled-check.png - iguales - no transferidos
+/public_html/assets/img/elements/disabled-radio.png - iguales - no transferidos
+/public_html/assets/img/elements/f1.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f2.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f3.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f4.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f5.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f6.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f7.jpg - iguales - no transferidos
+/public_html/assets/img/elements/f8.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g1.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g2.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g3.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g4.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g5.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g6.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g7.jpg - iguales - no transferidos
+/public_html/assets/img/elements/g8.jpg - iguales - no transferidos
+/public_html/assets/img/elements/primary-check.png - iguales - no transferidos
+/public_html/assets/img/elements/primary-radio.png - iguales - no transferidos
+/public_html/assets/img/elements/success-check.png - iguales - no transferidos
+/public_html/assets/img/elements/success-radio.png - iguales - no transferidos
+/public_html/assets/img/gallery/1.png - iguales - no transferidos
+/public_html/assets/img/gallery/2.png - iguales - no transferidos
+/public_html/assets/img/gallery/3.png - iguales - no transferidos
+/public_html/assets/img/gallery/67708918_2553302394714684_7430057624080482304_n.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/87995877_3018442998200619_5877436618842832896_n.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/88205476_3018443564867229_2731991975015219200_n.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/blog01.png - iguales - no transferidos
+/public_html/assets/img/gallery/blog02.png - iguales - no transferidos
+/public_html/assets/img/gallery/blog1.png - iguales - no transferidos
+/public_html/assets/img/gallery/brand22.png - iguales - no transferidos
+/public_html/assets/img/gallery/drywall.JPG - iguales - no transferidos
+/public_html/assets/img/gallery/drywalll.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/footer_bg.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/home_blog1.png - iguales - no transferidos
+/public_html/assets/img/gallery/home_blog2.png - iguales - no transferidos
+/public_html/assets/img/gallery/Homepage_testi.png - iguales - no transferidos
+/public_html/assets/img/gallery/s.png - iguales - no transferidos
+/public_html/assets/img/gallery/section_bg02.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/section_bg04.jpg - iguales - no transferidos
+/public_html/assets/img/gallery/services1.png - iguales - no transferidos
+/public_html/assets/img/gallery/services2.png - iguales - no transferidos
+/public_html/assets/img/gallery/services3.png - iguales - no transferidos
+/public_html/assets/img/gallery/services4.png - iguales - no transferidos
+/public_html/assets/img/gallery/services5.png - iguales - no transferidos
+/public_html/assets/img/gallery/services6.png - iguales - no transferidos
+/public_html/assets/img/gallery/shape1.png - iguales - no transferidos
+/public_html/assets/img/gallery/t1.png - iguales - no transferidos
+/public_html/assets/img/gallery/z.png - iguales - no transferidos
+/public_html/assets/img/hero/about.jpg - iguales - no transferidos
+/public_html/assets/img/hero/h1_hero 2.jpg - iguales - no transferidos
+/public_html/assets/img/hero/h1_hero.jpg - iguales - no transferidos
+/public_html/assets/img/hero/hero2.jpg - iguales - no transferidos
+/public_html/assets/img/hero/hero_line.png - iguales - no transferidos
+/public_html/assets/img/service/1.png - iguales - no transferidos
+/public_html/assets/img/service/2.png - iguales - no transferidos
+/public_html/assets/img/service/3.png - iguales - no transferidos
+/public_html/assets/img/service/service_icon_1.png - iguales - no transferidos
+/public_html/assets/img/service/service_icon_2.png - iguales - no transferidos
+/public_html/assets/img/service/service_icon_3.png - iguales - no transferidos
+/public_html/assets/img/service/service_icon_bg_1.png - iguales - no transferidos
+/public_html/assets/img/team/1.png - iguales - no transferidos
+/public_html/assets/img/team/2.png - iguales - no transferidos
+/public_html/assets/img/team/3.png - iguales - no transferidos
+/public_html/assets/img/Favicon.png - iguales - no transferidos
+/public_html/assets/js/jquery.paroller.min.js - iguales - no transferidos
+/public_html/assets/js/one-page-nav-min.js - iguales - no transferidos
+/public_html/assets/js/price-range.js - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/119899696_3585005518211028_6388341188914653978_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/13975481_1201394236572180_2970950450007209184_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/13987414_1201393626572241_5634170732567999403_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14543673_1249717215073215_6816428396986978179_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14680966_1249717091739894_6404306592982724890_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14682176_1249717051739898_6018166098395735281_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14708080_1249716898406580_3244000501733312653_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14711382_1249717068406563_1237822145835789328_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14947887_1286904808021122_9216877894037043052_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/14993480_1286904721354464_1235560357874936258_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15027867_1286904958021107_3862652040391741415_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15037217_1286904954687774_5285110849731447327_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15056314_1286904911354445_7962899725999208946_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15073406_1286904681354468_6176202681499309349_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15094371_1286904628021140_704958306911337264_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15094386_1286904644687805_5048671162601787640_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/15107440_1286904778021125_7995047668526020136_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/16939029_1400037620041173_2065183762700579272_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/21994088_1615741835137416_3523070672494412891_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/22042165_1615741768470756_2877959231222453080_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/279693528_5406269459417949_4381505676810814493_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/33770852_1876035432441387_666329992329691136_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/33851511_1876035392441391_7894975825143922688_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/33894880_1876033692441561_4952752244735868928_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/33897385_1876035532441377_3822724273026367488_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45478394_2111794735532121_3392486090337157120_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45479896_2111794572198804_2584828322231877632_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45488903_2111794645532130_978726749296656384_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45539036_2111794238865504_1164224763313258496_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45561990_2111794335532161_9105418847493554176_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/45573568_2111794378865490_7936361266719752192_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51287879_2246097542101839_2023484420291297280_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51491125_2246097712101822_5638403598418182144_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51536767_2246097455435181_8247363533705052160_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51562097_2246097485435178_3314590411678285824_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51641745_2246097938768466_2714572249087606784_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/51668710_2246097788768481_527584939302977536_o.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/67565061_2553303634714560_8526208976818274304_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/67623359_2553303504714573_4119723138445475840_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/67708918_2553302394714684_7430057624080482304_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/67730590_2553302198048037_8851641045427945472_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/81626185_2897090403669213_7563634083398418432_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/82399256_2897090487002538_5454291621887606784_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/82718273_2897090223669231_5075282013808754688_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/87995877_3018442998200619_5877436618842832896_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/88197200_3018442901533962_6565512395664392192_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/88205476_3018443564867229_2731991975015219200_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/90029126_3050154538362798_139239472481959936_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/90038110_3050155125029406_6725258872400904192_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/90150527_3050153858362866_3065778794397696000_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/90218856_3050156981695887_8926768836707876864_n.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/movistar2.jpg - iguales - no transferidos
+/public_html/fotos de la empresa/imagenes ya editadas/proyecto movistaer.jpg - iguales - no transferidos
+/public_html/about.html - iguales - no transferidos
+/public_html/BEH.png - iguales - no transferidos
+/public_html/blog.html - iguales - no transferidos
+/public_html/blog_details.html - iguales - no transferidos
+/public_html/contact.html - iguales - no transferidos
+/public_html/contact_process.php - iguales - no transferidos
+/public_html/elements.html - iguales - no transferidos
+/public_html/gallery.html - iguales - no transferidos
+/public_html/index.html - iguales - no transferidos
+/public_html/main.html - iguales - no transferidos
+/public_html/readme.txt - iguales - no transferidos
+/public_html/services.html - iguales - no transferidos
+/public_html/work.html - iguales - no transferidos
+/public_html/assets/img/gallery/brand1.png - operación Obtener correcta
+/public_html/assets/img/gallery/brand2.png - operación Obtener correcta
+/public_html/assets/img/gallery/brand3.png - con errores - Se ha producido Un error FTP - no se puede obtener brand3.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/brand4.png - con errores - Se ha producido Un error FTP - no se puede obtener brand4.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/brand5.png - con errores - Se ha producido Un error FTP - no se puede obtener brand5.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/brand6.png - con errores - Se ha producido Un error FTP - no se puede obtener brand6.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/drywalll.jpg - con errores - Se ha producido Un error FTP - no se puede obtener drywalll.jpg.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery1.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery1.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery2.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery2.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery3.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery3.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery4.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery4.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery5.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery5.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/gallery6.png - con errores - Se ha producido Un error FTP - no se puede obtener gallery6.png.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de red esté conectado y que la red esté en funcionamiento. 	- El servidor FTP está caído. Compruebe que puede conectar con el servidor FTP mediante otro programa de FTP. 	- El nombre del host FTP es incorrecto. Compruebe que el nombre del host sea correcto en el cuadro de diálogo Definición del sitio. 	- El acceso al servidor requiere una configuración de proxy que no se ha establecido correctamente. Compruebe que la configuración de proxy de la categoría Sitio en el cuadro de diálogo Preferencias se haya establecido correctamente y que esté seleccionada la opción Utilizar proxy en el cuadro de diálogo Definición del sitio.  	- Es posible que tenga que conectar al servidor mediante un puerto diferente al proporcionado. Especifique el puerto correcto en el cuadro proporcionado.
+/public_html/assets/img/gallery/instagram1.jpg - con errores - Se ha producido Un error FTP - no se puede obtener instagram1.jpg.  Dreamweaver no ha podido conectar con el servidor. Esto puede deberse a uno o varios de los siguientes motivos:  	- El cable de red está desconectado o la red está caída. Compruebe que el cable de 

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estamos trabajando para ti - BEH Formas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .maintenance-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo Loader */
+        .logo-loader {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .logo-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: #667eea;
+            letter-spacing: 2px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .logo-spinner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(102, 126, 234, 0.1);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(0.95);
+            }
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .loading-dots {
+            font-size: 20px;
+            letter-spacing: 3px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            display: inline-block;
+            animation: bounce 1.4s infinite;
+        }
+
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
+            40% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+
+        .cta-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .cta-text {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .newsletter-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            animation: slideUpCookie 0.5s ease-out;
+            z-index: 999;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        @keyframes slideUpCookie {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .cookie-content {
+            flex: 1;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .cookie-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cookie-accept {
+            background: #667eea;
+            color: white;
+        }
+
+        .cookie-accept:hover {
+            background: #764ba2;
+        }
+
+        .cookie-decline {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .cookie-decline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Newsletter Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.4s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .skip-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 13px;
+            margin-top: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .skip-link:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .cookie-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cookie-buttons {
+                width: 100%;
+            }
+
+            .cookie-btn {
+                flex: 1;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Maintenance Page -->
+    <div class="maintenance-container">
+        <div class="logo-loader">
+            <div class="logo-spinner"></div>
+            <div class="logo-wrapper">
+                <div class="logo-text">BEH</div>
+            </div>
+        </div>
+
+        <h1>Estamos trabajando para ti</h1>
+        <p class="subtitle">
+            Estamos preparando una experiencia increíble. Vuelve pronto para descubrir nuestras nuevas propuestas de diseño.
+        </p>
+
+        <div class="loading-dots">
+            <span class="dot">•</span>
+            <span class="dot">•</span>
+            <span class="dot">•</span>
+        </div>
+
+        <div class="cta-section">
+            <p class="cta-text">¿Quieres ser de los primeros en enterarte?</p>
+            <button class="newsletter-btn" onclick="openNewsletterModal()">Notifícame cuando esté listo</button>
+        </div>
+    </div>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletterModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeNewsletterModal()">&times;</button>
+            <h2>Mantente informado</h2>
+            <p>Suscríbete a nuestro newsletter y recibe toda la información sobre nuestros nuevos proyectos y servicios.</p>
+            
+            <form id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Tu correo electrónico" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Tu teléfono (opcional)">
+                </div>
+                <button type="submit" class="submit-btn">Suscribirme</button>
+            </form>
+
+            <div class="skip-link" onclick="closeNewsletterModal()">
+                No, gracias, volver atrás
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-content">
+            Utilizamos cookies para mejorar tu experiencia. Al continuar navegando, aceptas el uso de cookies.
+        </div>
+        <div class="cookie-buttons">
+            <button class="cookie-btn cookie-decline" onclick="declineCookies()">Rechazar</button>
+            <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        // Newsletter Modal Functions
+        function openNewsletterModal() {
+            document.getElementById('newsletterModal').classList.add('show');
+        }
+
+        function closeNewsletterModal() {
+            document.getElementById('newsletterModal').classList.remove('show');
+        }
+
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const name = form.children[0].children[0].value;
+            const email = form.children[1].children[0].value;
+            const phone = form.children[2].children[0].value;
+
+            // Store in localStorage
+            const subscriber = {
+                name: name,
+                email: email,
+                phone: phone,
+                date: new Date().toISOString()
+            };
+
+            let subscribers = JSON.parse(localStorage.getItem('beh_subscribers') || '[]');
+            subscribers.push(subscriber);
+            localStorage.setItem('beh_subscribers', JSON.stringify(subscribers));
+
+            // Show success message
+            alert('¡Gracias! Nos pondremos en contacto contigo pronto.');
+            closeNewsletterModal();
+            form.reset();
+        }
+
+        // Cookie Functions
+        function acceptCookies() {
+            localStorage.setItem('beh_cookies_accepted', 'true');
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        function declineCookies() {
+            localStorage.setItem('beh_cookies_accepted', 'false');
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        // Check if user already accepted cookies
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookiesAccepted = localStorage.getItem('beh_cookies_accepted');
+            if (cookiesAccepted) {
+                document.getElementById('cookieBanner').style.display = 'none';
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('newsletterModal');
+            if (event.target === modal) {
+                closeNewsletterModal();
+            }
+        }
+    </script>
+</body>
+</html>

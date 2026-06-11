@@ -1,0 +1,57 @@
+# Configuration & Secrets
+openai_config.php
+replicate_config.php
+groq_config.php
+.env
+.env.local
+*.pem
+*.key
+
+# API Keys & Credentials
+config/secrets/
+.aws/
+.env*
+
+# Logs & Temp
+*.log
+logs/
+tmp/
+*.tmp
+
+# Data files (keep structure, ignore content)
+data/space_ai/originals/*
+data/space_ai/renders/*
+!data/space_ai/originals/.gitkeep
+!data/space_ai/renders/.gitkeep
+
+# Mail & Cache
+mail/
+lscache/
+magicspam/
+
+# System
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Node (if used)
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Build outputs
+vendor/
+dist/
+build/
+
+# Database backups
+*.sql
+*.sql.gz
+backup/
