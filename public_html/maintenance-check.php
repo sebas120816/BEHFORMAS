@@ -10,7 +10,7 @@
  */
 
 // Configuration
-define('MAINTENANCE_MODE', true); // Set to false to disable maintenance mode
+define('MAINTENANCE_MODE', false); // Set to false to disable maintenance mode
 define('MAINTENANCE_PAGE', __DIR__ . '/maintenance.html');
 
 // Admin IPs that can bypass maintenance mode (empty array to disable)
@@ -39,26 +39,39 @@ function is_admin_ip() {
 
 function check_maintenance_mode() {
     if (MAINTENANCE_MODE && !is_admin_ip()) {
-        // Allow API requests to continue (for async operations)
         $request_uri = $_SERVER['REQUEST_URI'];
-        $allowed_paths = array('/api/', '/space_ai.php', '/seeb_wood_ai.php', '/.well-known/');
         
-        $is_api_request = false;
-        foreach ($allowed_paths as $path) {
-            if (strpos($request_uri, $path) !== false) {
-                $is_api_request = true;
+        // ONLY show maintenance for online store paths
+        $store_paths = array(
+            '/shop/',
+            '/tienda/',
+            '/store/',
+            '/marketplace/',
+            '/cart/',
+            '/checkout/',
+            '/producto/',
+            '/product/',
+            '/catalogo/',
+            '/catalog/',
+            '/pedidos/',
+            '/orders/',
+            '/mi-cuenta/',
+            '/my-account/'
+        );
+        
+        $is_store_page = false;
+        foreach ($store_paths as $path) {
+            if (strpos($request_uri, $path) === 0) {
+                $is_store_page = true;
                 break;
             }
         }
         
-        if (!$is_api_request) {
-            // Check if file exists, otherwise show maintenance
-            $requested_file = __DIR__ . parse_url($request_uri, PHP_URL_PATH);
-            
-            if (!is_file($requested_file) || $request_uri === '/' || $request_uri === '/index.php') {
-                include MAINTENANCE_PAGE;
-                exit;
-            }
+        // Only show maintenance if it's a store page
+        if ($is_store_page && file_exists(MAINTENANCE_PAGE)) {
+            http_response_code(503);
+            include MAINTENANCE_PAGE;
+            exit;
         }
     }
 }
