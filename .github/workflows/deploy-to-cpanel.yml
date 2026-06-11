@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,14 +16,14 @@ jobs:
           fetch-depth: 0
 
       - name: Deploy public_html via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./public_html/
           server-dir: ./public_html/
-          state-name: .ftp-deploy-sync-state.json
+          state-name: .ftp-deploy-sync-state-public_html.json
           dangerous-clean-slate: false
           exclude: |
             **/.git*
@@ -33,19 +33,15 @@ jobs:
             **/.env.local
 
       - name: Deploy data directory via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./data/
           server-dir: ./data/
+          state-name: .ftp-deploy-sync-state-data.json
           dangerous-clean-slate: false
-
-      - name: Create openai_config.php on server
-        uses: appleboy/ssh-action@master
-        if: ${{ false }}  # Disabled - configure manually on server
-        continue-on-error: true
 
       - name: Deployment Summary
         run: |
@@ -55,5 +51,5 @@ jobs:
           echo ""
           echo "Next steps:"
           echo "1. Verify at: https://behformas.com/maintenance.html"
-          echo "2. Configure openai_config.php on server"
+          echo "2. Configure openai_config.php manually on server"
           echo "3. Test API endpoints"
