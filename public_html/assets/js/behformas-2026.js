@@ -73,7 +73,7 @@
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    const compactSource = (image) => decodeURIComponent(image.currentSrc || image.src || "").includes("/beh/fotos BEH /");
+    const compactSource = (image) => decodeURIComponent(image.currentSrc || image.src || "").includes("/beh/fotos-beh/");
     const cinematicImages = gsap.utils.toArray([
       "[data-system-image]",
       ".service-card img",
