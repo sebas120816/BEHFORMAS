@@ -9,7 +9,18 @@
 
   document.body.classList.add("is-loading");
 
-  const preloader = document.querySelector("[data-preloader]");
+  let preloader = document.querySelector("[data-preloader]");
+  if (!preloader) {
+    preloader = document.createElement("div");
+    preloader.className = "preloader";
+    preloader.dataset.preloader = "";
+    preloader.innerHTML = `
+      <div class="preloader-mark">
+        <span class="preloader-ring"></span>
+        <img src="/1x/logo%20sin%20texto.png" alt="BEH">
+      </div>`;
+    document.body.prepend(preloader);
+  }
   const toggle = document.querySelector("[data-nav-toggle]");
   const links = document.querySelector("[data-nav-links]");
   const scrollProgress = document.querySelector("[data-scroll-progress]");
@@ -149,13 +160,117 @@
     document.body.classList.remove("is-loading");
   };
 
-  if (document.body.classList.contains("focused-home")) hidePreloader();
+  const showPreloader = () => {
+    if (!preloader) return;
+    preloader.classList.remove("is-hidden");
+    document.body.classList.add("is-loading");
+  };
 
   window.addEventListener("load", () => {
-    window.setTimeout(hidePreloader, 80);
+    window.setTimeout(hidePreloader, reduceMotion ? 80 : 520);
   });
 
-  window.setTimeout(hidePreloader, 900);
+  window.setTimeout(hidePreloader, 1600);
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const url = new URL(link.href, window.location.href);
+    const sameDocumentAnchor = url.origin === window.location.origin
+      && url.pathname === window.location.pathname
+      && url.hash;
+    if (sameDocumentAnchor || link.target === "_blank" || url.protocol === "mailto:" || url.protocol === "tel:") return;
+    showPreloader();
+  });
+
+  const storageGet = (key) => {
+    try {
+      return window.localStorage ? localStorage.getItem(key) : "";
+    } catch (error) {
+      return "";
+    }
+  };
+
+  const storageSet = (key, value) => {
+    try {
+      if (window.localStorage) localStorage.setItem(key, value);
+    } catch (error) {
+      // The experience remains usable when storage is unavailable.
+    }
+  };
+
+  const createLeadPanel = () => {
+    if (document.querySelector("[data-lead-panel]") || storageGet("beh-lead-panel-dismissed")) return;
+    const panel = document.createElement("aside");
+    panel.className = "lead-panel";
+    panel.dataset.leadPanel = "";
+    panel.setAttribute("aria-label", "Contacto inicial BEH");
+    panel.innerHTML = `
+      <button class="lead-panel__close" type="button" aria-label="Cerrar formulario" data-lead-close>&times;</button>
+      <span class="lead-panel__eyebrow">Hablemos de tu espacio</span>
+      <h2>Recibe orientación para empezar.</h2>
+      <p>Déjanos tus datos y te contactamos para entender medidas, cantidades y el tipo de solución que necesitas.</p>
+      <form class="lead-panel__form" action="/contact_process.php" method="post">
+        <input type="hidden" name="subject" value="Contacto inicial desde la web">
+        <input type="hidden" name="message" value="Solicito orientación inicial sobre mobiliario, carpintería o adecuación de espacios.">
+        <label><span>Nombre</span><input type="text" name="name" autocomplete="name" required placeholder="Tu nombre"></label>
+        <label><span>Correo</span><input type="email" name="email" autocomplete="email" required placeholder="nombre@empresa.com"></label>
+        <label><span>WhatsApp</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+57 310 000 0000"></label>
+        <label class="lead-panel__consent"><input type="checkbox" required><span>Autorizo a BEH a contactarme.</span></label>
+        <button class="btn" type="submit">Quiero recibir información</button>
+      </form>`;
+    document.body.append(panel);
+    window.requestAnimationFrame(() => panel.classList.add("is-visible"));
+    panel.querySelector("[data-lead-close]").addEventListener("click", () => {
+      storageSet("beh-lead-panel-dismissed", String(Date.now()));
+      panel.classList.remove("is-visible");
+      window.setTimeout(() => panel.remove(), 320);
+    });
+  };
+
+  const scheduleLeadPanel = (delay = 700) => {
+    window.setTimeout(createLeadPanel, delay);
+  };
+
+  const createCookieConsent = () => {
+    if (storageGet("beh-cookie-consent")) {
+      scheduleLeadPanel(1000);
+      return;
+    }
+    const consent = document.createElement("aside");
+    consent.className = "cookie-consent";
+    consent.setAttribute("aria-label", "Preferencias de privacidad");
+    consent.innerHTML = `
+      <div>
+        <strong>Tu privacidad, con claridad.</strong>
+        <p>Usamos almacenamiento esencial para recordar tus preferencias y mejorar tu experiencia. No vendemos tus datos. <a href="/privacidad.html">Ver política de privacidad</a>.</p>
+      </div>
+      <div class="cookie-consent__actions">
+        <button type="button" class="btn secondary" data-cookie-choice="essential">Solo esenciales</button>
+        <button type="button" class="btn" data-cookie-choice="accepted">Aceptar</button>
+      </div>`;
+    document.body.append(consent);
+    window.requestAnimationFrame(() => consent.classList.add("is-visible"));
+    consent.querySelectorAll("[data-cookie-choice]").forEach((button) => {
+      button.addEventListener("click", () => {
+        storageSet("beh-cookie-consent", button.dataset.cookieChoice);
+        consent.classList.remove("is-visible");
+        window.setTimeout(() => consent.remove(), 320);
+        scheduleLeadPanel(500);
+      });
+    });
+  };
+
+  window.addEventListener("load", () => window.setTimeout(createCookieConsent, 850), { once: true });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const panel = document.querySelector("[data-lead-panel]");
+    if (!panel) return;
+    storageSet("beh-lead-panel-dismissed", String(Date.now()));
+    panel.classList.remove("is-visible");
+    window.setTimeout(() => panel.remove(), 320);
+  });
 
   const updateScrollProgress = () => {
     if (!scrollProgress) return;
@@ -934,6 +1049,116 @@
         button.style.transform = "";
       });
     });
+
+    const basket = document.querySelector("[data-quote-basket]");
+    const basketItems = document.querySelector("[data-quote-items]");
+    const basketCount = document.querySelector("[data-quote-count]");
+    const basketNote = document.querySelector("[data-quote-note]");
+    const basketSend = document.querySelector("[data-quote-send]");
+    const quoteKey = "beh-market-quote";
+    const quoteEscape = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#039;"
+    }[char]));
+    let quote = [];
+
+    try {
+      quote = JSON.parse(localStorage.getItem(quoteKey) || "[]");
+      if (!Array.isArray(quote)) quote = [];
+    } catch (error) {
+      quote = [];
+    }
+
+    const saveQuote = () => {
+      storageSet(quoteKey, JSON.stringify(quote));
+    };
+
+    const openQuote = () => {
+      if (!basket) return;
+      basket.classList.add("is-visible");
+      basket.setAttribute("aria-hidden", "false");
+    };
+
+    const closeQuote = () => {
+      if (!basket) return;
+      basket.classList.remove("is-visible");
+      basket.setAttribute("aria-hidden", "true");
+    };
+
+    const renderQuote = () => {
+      const total = quote.reduce((sum, item) => sum + item.quantity, 0);
+      if (basketCount) basketCount.textContent = String(total);
+      if (basketItems) {
+        basketItems.innerHTML = quote.length
+          ? quote.map((item) => `
+            <article>
+              <div><strong>${quoteEscape(item.name)}</strong><span>${quoteEscape(item.ref)}</span></div>
+              <div class="quote-basket__quantity">
+                <button type="button" data-quote-minus="${quoteEscape(item.ref)}" aria-label="Restar unidad">−</button>
+                <b>${item.quantity}</b>
+                <button type="button" data-quote-plus="${quoteEscape(item.ref)}" aria-label="Agregar unidad">+</button>
+              </div>
+            </article>`).join("")
+          : "<div class=\"quote-basket__empty\"><strong>Aún no agregas productos.</strong><span>Explora el catálogo y arma una solicitud a tu medida.</span></div>";
+      }
+      if (basketSend) {
+        const lines = quote.map((item) => `- ${item.quantity} x ${item.name} (${item.ref})`);
+        const note = basketNote && basketNote.value.trim() ? `\nNotas: ${basketNote.value.trim()}` : "";
+        basketSend.href = `https://wa.me/573103200976?text=${encodeURIComponent(`Hola BEH, quiero cotizar estas soluciones:\n\n${lines.join("\n")}${note}`)}`;
+        basketSend.classList.toggle("is-disabled", quote.length === 0);
+        basketSend.setAttribute("aria-disabled", quote.length === 0 ? "true" : "false");
+      }
+      marketCards.forEach((card) => {
+        const button = card.querySelector("[data-quote-add]");
+        if (!button) return;
+        const selected = quote.some((item) => item.ref === card.dataset.quoteRef);
+        button.classList.toggle("is-added", selected);
+        button.textContent = selected ? "Agregado · sumar otro" : "Agregar a cotización";
+      });
+    };
+
+    marketCatalog.querySelectorAll("[data-quote-add]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = button.closest("[data-quote-product]");
+        if (!card) return;
+        const existing = quote.find((item) => item.ref === card.dataset.quoteRef);
+        if (existing) existing.quantity += 1;
+        else quote.push({ name: card.dataset.quoteProduct, ref: card.dataset.quoteRef, quantity: 1 });
+        saveQuote();
+        renderQuote();
+        openQuote();
+      });
+    });
+
+    if (basketItems) {
+      basketItems.addEventListener("click", (event) => {
+        const control = event.target.closest("[data-quote-plus], [data-quote-minus]");
+        if (!control) return;
+        const ref = control.dataset.quotePlus || control.dataset.quoteMinus;
+        const item = quote.find((entry) => entry.ref === ref);
+        if (!item) return;
+        item.quantity += control.dataset.quotePlus ? 1 : -1;
+        quote = quote.filter((entry) => entry.quantity > 0);
+        saveQuote();
+        renderQuote();
+      });
+    }
+
+    document.querySelector("[data-quote-open]")?.addEventListener("click", openQuote);
+    document.querySelector("[data-quote-close]")?.addEventListener("click", closeQuote);
+    document.querySelector("[data-quote-clear]")?.addEventListener("click", () => {
+      quote = [];
+      saveQuote();
+      renderQuote();
+    });
+    basketNote?.addEventListener("input", renderQuote);
+    basketSend?.addEventListener("click", (event) => {
+      if (!quote.length) event.preventDefault();
+    });
+    renderQuote();
   }
 
   const lightboxImages = document.querySelectorAll(".project-card img, .motion-card img, .office-photo, .material-photo img, .cinematic-rail img, .beh-showcase-card img, .beh-archive-grid img, .market-card img");

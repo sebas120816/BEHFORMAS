@@ -15,6 +15,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Validate production-safe asset paths
+        run: |
+          if grep -RIlE 'beh/fotos(%20| )BEH(%20| )/' public_html --include='*.html' --include='*.css' --include='*.js' --include='*.php'; then
+            echo "Found references to the legacy folder with spaces. Use beh/fotos-beh/."
+            exit 1
+          fi
+          test -d public_html/beh/fotos-beh
+          test -f public_html/beh/fotos-beh/490327811_1228774275921020_3404180664125765180_n.jpg
+
       - name: Deploy public_html via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
@@ -31,6 +40,11 @@ jobs:
             **/maintenance-check.php
             **/.env
             **/.env.local
+            **/beh/fotos BEH /**
+            **/beh/fotos BEH_/**
+            **/logs/**
+            **/etc/**
+            **/claves.txt
 
       - name: Deploy data directory via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
@@ -45,11 +59,6 @@ jobs:
 
       - name: Deployment Summary
         run: |
-          echo "✅ Deployment completed!"
-          echo "📍 Files deployed to: behformas.com/public_html"
-          echo "📍 Data directory updated"
-          echo ""
-          echo "Next steps:"
-          echo "1. Verify at: https://behformas.com/maintenance.html"
-          echo "2. Configure openai_config.php manually on server"
-          echo "3. Test API endpoints"
+          echo "Deployment completed."
+          echo "Site: https://behformas.com/"
+          echo "Store: https://tienda.behformas.com/"
