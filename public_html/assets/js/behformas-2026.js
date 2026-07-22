@@ -17,7 +17,7 @@
     preloader.innerHTML = `
       <div class="preloader-mark">
         <span class="preloader-ring"></span>
-        <img src="/1x/logo%20sin%20texto.png" alt="BEH">
+        <img src="/1x/beh-logo-mark.png" alt="BEH">
       </div>`;
     document.body.prepend(preloader);
   }
@@ -1055,6 +1055,7 @@
     const basketCount = document.querySelector("[data-quote-count]");
     const basketNote = document.querySelector("[data-quote-note]");
     const basketSend = document.querySelector("[data-quote-send]");
+    const marketCards = [...(marketCatalog ? marketCatalog.querySelectorAll("[data-market-category]") : [])];
     const quoteKey = "beh-market-quote";
     const quoteEscape = (value) => String(value).replace(/[&<>"']/g, (char) => ({
       "&": "&amp;",

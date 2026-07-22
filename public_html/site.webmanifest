@@ -8,8 +8,8 @@
   "theme_color": "#9f5f28",
   "icons": [
     {
-      "src": "/1x/solo%20bloque.png",
-      "sizes": "53x44",
+      "src": "/1x/beh-favicon.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
