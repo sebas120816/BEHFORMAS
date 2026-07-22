@@ -1,0 +1,199 @@
+﻿@using Grand.Business.Core.Interfaces.Storage
+@inject IPictureService pictureService
+@inject SeoSettings seoSettings
+@{
+    Layout = "_SingleColumn";
+    <link rel="stylesheet" type="text/css" asp-src="/Plugins/Theme.BehOffice/Content/css/home/home.css">
+}
+
+@section meta {
+    @if (seoSettings.OpenGraphMetaTags)
+    {
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="@seoSettings.DefaultTitle"/>
+        <meta property="og:description" content="@Html.Encode(seoSettings.DefaultMetaDescription)"/>
+        @if (!string.IsNullOrWhiteSpace(seoSettings.StorePictureId))
+        {
+            var picture = await pictureService.GetPictureUrl(seoSettings.StorePictureId);
+            <meta property="og:image" content="@picture"/>
+        }
+
+        <meta property="og:url" content="@Url.ActionContext.HttpContext.Request.GetEncodedUrl()"/>
+    }
+    @if (seoSettings.TwitterMetaTags)
+    {
+        <meta property="twitter:card" content="summary"/>
+        <meta property="twitter:site" content="@seoSettings.DefaultTitle"/>
+        <meta property="twitter:title" content="@seoSettings.DefaultTitle"/>
+        <meta property="twitter:description" content="@Html.Encode(seoSettings.DefaultMetaDescription)"/>
+        @if (!string.IsNullOrWhiteSpace(seoSettings.StorePictureId))
+        {
+            var picture = await pictureService.GetPictureUrl(seoSettings.StorePictureId);
+            <meta property="twitter:image" content="@picture"/>
+        }
+
+        <meta property="twitter:url" content="@Url.ActionContext.HttpContext.Request.GetEncodedUrl()"/>
+    }
+}
+
+<div id="home-page" v-bind:class="{ toggled: !menuToggled }" class="page home-page custom-container d-flex flex-column mt-0">
+    @await Component.InvokeAsync("PushNotificationsRegistration")
+    @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" })
+    <section class="beh-market-hero" aria-labelledby="beh-market-title">
+        <div class="beh-market-hero__media" aria-hidden="true"></div>
+        <canvas class="beh-blueprint-canvas" data-beh-blueprint aria-hidden="true"></canvas>
+        <div class="beh-construct-lines" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="beh-market-hero__content">
+            <span class="beh-kicker">BEH Oficinas · Tienda Colombia</span>
+            <h1 id="beh-market-title">Mobiliario que arma oficinas vivas.</h1>
+            <p>Sillas, escritorios, salas de espera y estaciones listas para compra empresarial, con asesoría BEH para cantidades, acabados e instalación.</p>
+            <div class="beh-market-hero__actions">
+                <a class="beh-btn beh-btn--primary" href="/sillas-de-oficina">Ver productos</a>
+                <a class="beh-btn beh-btn--secondary" href="https://behformas.com/#cotizador">Cotizar proyecto</a>
+            </div>
+            <ul class="beh-market-hero__proof" aria-label="Beneficios BEH">
+                <li>Precios en COP</li>
+                <li>Fabricación nacional</li>
+                <li>Entrega e instalación</li>
+            </ul>
+        </div>
+        <aside class="beh-market-hero__spec" aria-label="Modalidades de compra">
+            <span>Compra empresarial</span>
+            <strong>Producto + instalación</strong>
+            <small>Atención para oficinas, arquitectos y constructoras.</small>
+        </aside>
+    </section>
+
+    <section class="beh-paths" aria-label="Formas de comprar">
+        <a href="/sillas-de-oficina">
+            <span>01</span>
+            <strong>Comprar productos</strong>
+            <small>Referencias listas y configurables.</small>
+        </a>
+        <a href="https://behformas.com/#cotizador">
+            <span>02</span>
+            <strong>Cotizar por cantidad</strong>
+            <small>Precio empresarial para múltiples unidades.</small>
+        </a>
+        <a href="https://behformas.com/#contacto">
+            <span>03</span>
+            <strong>Diseñar oficina completa</strong>
+            <small>Visita, fabricación e instalación.</small>
+        </a>
+    </section>
+
+    <section class="beh-editorial-categories" aria-labelledby="beh-spaces-title">
+        <header>
+            <span class="beh-kicker">Compra por espacio</span>
+            <h2 id="beh-spaces-title">Todo lo que una oficina necesita, organizado para decidir mejor.</h2>
+        </header>
+        <div class="beh-editorial-categories__grid">
+            <a class="beh-space beh-space--large" href="/escritorios-y-estaciones">
+                <img src="/Plugins/Theme.BehOffice/Content/images/beh/workstations.jpg" alt="Estación de trabajo en carpintería a medida fabricada por BEH">
+                <span><strong>Puestos de trabajo</strong><small>Operativos, ejecutivos y modulares</small></span>
+            </a>
+            <a class="beh-space" href="/sillas-de-oficina">
+                <img src="/Plugins/Theme.BehOffice/Content/images/beh/meeting-room.jpg" alt="Sala de juntas con mobiliario BEH">
+                <span><strong>Sillas de oficina</strong><small>Ergonómicas, gerenciales y operativas</small></span>
+            </a>
+            <a class="beh-space" href="/tándem-y-salas-de-espera">
+                <img src="/Plugins/Theme.BehOffice/Content/images/beh/executive-desk.jpg" alt="Zona de espera y atención instalada por BEH">
+                <span><strong>Espera y atención</strong><small>Tándem, interlocutoras y zonas comunes</small></span>
+            </a>
+        </div>
+    </section>
+
+    <div id="beh-catalog" class="beh-catalog-start">
+        <span class="beh-kicker">Catálogo BEH</span>
+        <h2>Productos y soluciones corporativas</h2>
+        <p>Configura acabados, cantidades, entrega e instalación.</p>
+    </div>
+    <nav class="beh-category-index" aria-label="Categorías de productos">
+        <a href="/sillas-de-oficina"><span>01</span><strong>Sillas de oficina</strong><small>Gerenciales, operativas y ergonómicas</small></a>
+        <a href="/sillas-interlocutoras"><span>02</span><strong>Interlocutoras</strong><small>Atención, recepción y salas auxiliares</small></a>
+        <a href="/tándem-y-salas-de-espera"><span>03</span><strong>Salas de espera</strong><small>Tándem y soluciones de alto tráfico</small></a>
+        <a href="/escritorios-y-estaciones"><span>04</span><strong>Escritorios</strong><small>Estaciones elevables y puestos de trabajo</small></a>
+        <a href="/accesorios-para-sillas"><span>05</span><strong>Accesorios</strong><small>Brazos, bases, rodachinas y repuestos</small></a>
+        <a href="https://behformas.com/#cotizador"><span>06</span><strong>Proyecto completo</strong><small>Carpintería, divisiones e instalación</small></a>
+    </nav>
+
+    <section class="beh-buying-guide" aria-labelledby="beh-buying-guide-title">
+        <header>
+            <span class="beh-kicker">De la referencia al espacio</span>
+            <h2 id="beh-buying-guide-title">Compra simple cuando el producto es estándar. Acompañamiento completo cuando el proyecto lo exige.</h2>
+        </header>
+        <ol>
+            <li><span>01</span><div><strong>Elige una base</strong><p>Compara medidas, materiales y configuraciones publicadas.</p></div></li>
+            <li><span>02</span><div><strong>Define cantidades</strong><p>Compra una unidad o solicita precio empresarial desde diez unidades.</p></div></li>
+            <li><span>03</span><div><strong>Validamos la entrega</strong><p>Confirmamos ciudad, acceso, ensamble e instalación antes del despacho.</p></div></li>
+            <li><span>04</span><div><strong>BEH responde</strong><p>Fabricación, garantía y soporte quedan con un solo equipo.</p></div></li>
+        </ol>
+    </section>
+
+    <section class="beh-curated" aria-labelledby="beh-curated-title">
+        <header class="beh-curated__header">
+            <div>
+                <span class="beh-kicker">Selección inicial</span>
+                <h2 id="beh-curated-title">Referencias para empezar a construir tu oficina.</h2>
+            </div>
+            <a href="/sillas-de-oficina">Ver catálogo completo</a>
+        </header>
+        <div class="beh-curated__grid">
+            <article class="beh-product-card">
+                <a class="beh-product-card__media" href="/estela-alta-con-kit-fijo">
+                    <img src="/Plugins/Theme.BehOffice/Content/images/catalog/estela-alta-kit-fijo.png" alt="Silla Estela alta con kit fijo">
+                    <span>Ergonomía</span>
+                </a>
+                <div class="beh-product-card__body">
+                    <small>5-589C</small>
+                    <h3><a href="/estela-alta-con-kit-fijo">Estela alta con kit fijo</a></h3>
+                    <p><strong>Ver disponibilidad</strong></p>
+                </div>
+            </article>
+            <article class="beh-product-card">
+                <a class="beh-product-card__media" href="/oslo-presidente-negro">
+                    <img src="/Plugins/Theme.BehOffice/Content/images/catalog/oslo-presidente-negro.png" alt="Silla Oslo Presidente negra">
+                    <span>Dirección</span>
+                </a>
+                <div class="beh-product-card__body">
+                    <small>003-3780</small>
+                    <h3><a href="/oslo-presidente-negro">Oslo Presidente negro</a></h3>
+                    <p><strong>Ver disponibilidad</strong></p>
+                </div>
+            </article>
+            <article class="beh-product-card">
+                <a class="beh-product-card__media" href="/escritorio-digital-elevable-blanco">
+                    <img src="/Plugins/Theme.BehOffice/Content/images/catalog/escritorio-digital-elevable-blanco.png" alt="Escritorio digital elevable blanco">
+                    <span>Estaciones</span>
+                </a>
+                <div class="beh-product-card__body">
+                    <small>003-3724</small>
+                    <h3><a href="/escritorio-digital-elevable-blanco">Escritorio digital elevable blanco</a></h3>
+                    <p><strong>Ver disponibilidad</strong></p>
+                </div>
+            </article>
+            <article class="beh-product-card">
+                <a class="beh-product-card__media" href="/tándem-acero-cromo-4-puestos">
+                    <img src="/Plugins/Theme.BehOffice/Content/images/catalog/tandem-acero-cromo-4-puestos.png" alt="Tándem acero cromo de 4 puestos">
+                    <span>Espera</span>
+                </a>
+                <div class="beh-product-card__body">
+                    <small>003-3100</small>
+                    <h3><a href="/tándem-acero-cromo-4-puestos">Tándem acero cromo 4 puestos</a></h3>
+                    <p><strong>Ver disponibilidad</strong></p>
+                </div>
+            </article>
+        </div>
+    </section>
+    <section class="beh-project-cta" aria-label="Cotización empresarial BEH">
+        <div>
+            <span>¿La compra incluye varios espacios?</span>
+            <h2>Convierte el catálogo en una propuesta completa para tu oficina.</h2>
+        </div>
+        <p>Integramos mobiliario, carpintería, divisiones, transporte e instalación en una sola cotización.</p>
+        <a href="https://behformas.com/#cotizador">Iniciar cotización empresarial</a>
+    </section>
+    @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_bottom" })
+</div>

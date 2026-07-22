@@ -1,0 +1,43 @@
+﻿@inject StoreInformationSettings storeInformationSettings
+@inject IContextAccessor contextAccessor
+
+@if (!contextAccessor.WorkContext.CurrentCustomer.IsSystemAccount)
+{
+    if (contextAccessor.WorkContext.CurrentCustomer.GetUserFieldFromEntity<bool>(SystemCustomerFieldNames.CookieAccepted, contextAccessor.StoreContext.CurrentStore.Id))
+        return;
+
+    if (TempData["Grand.IgnoreCookieInformation"] != null && Convert.ToBoolean(TempData["Grand.IgnoreCookieInformation"]))
+        return;
+
+    <script asp-location="Footer" asp-order="300">
+        document.addEventListener("DOMContentLoaded", function () {
+            const bar = document.getElementById("cookie-bar-notification");
+            if (bar) bar.classList.add("is-visible");
+        });
+        function cookieFnc(e) {
+            axios({
+                method: "post",
+                url: '@Url.RouteUrl("CookieAccept")',
+                params: { accept: e.getAttribute("data-accept") }
+            }).then(function () {
+                const bar = document.getElementById("cookie-bar-notification");
+                if (bar) bar.classList.remove("is-visible");
+            }).catch(function () {
+                const bar = document.getElementById("cookie-bar-notification");
+                if (bar) bar.classList.remove("is-visible");
+            });
+        }
+    </script>
+
+    <aside id="cookie-bar-notification" class="beh-cookie-bar" aria-label="Aviso de cookies">
+        <div>
+            <span>Privacidad BEH</span>
+            <p>Usamos cookies para recordar tus preferencias, mejorar la tienda y medir el rendimiento del catálogo.</p>
+        </div>
+        <div class="beh-cookie-bar__actions">
+            <button type="button" onclick="cookieFnc(this)" data-accept="true">Aceptar</button>
+            <button type="button" onclick="cookieFnc(this)" data-accept="false">Solo necesarias</button>
+            <a href="https://behformas.com/privacidad.html">Política</a>
+        </div>
+    </aside>
+}

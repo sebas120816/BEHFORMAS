@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html use-lang="true">
+<head>
+    <title asp-default-title="true"></title>
+    <meta charset="utf-8">
+    <meta-description>
+    <meta-keywords>
+    <meta name="generator" content="grandnode">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    @await RenderSectionAsync("meta", false)
+    <head-custom>
+    <partial name="Head"/>
+    <vc:widget widget-zone="head_html_tag" additional-data="null"></vc:widget>
+    <canonical-urls>
+    @*Favicon - upload favicon.ico file to the wwwroot directory*@
+    <partial name="Partials/Favicons"/>
+    <resources asp-type="HeadLink"/>
+    <resources asp-type="HeadScript"/>
+    @await RenderSectionAsync("head", false)
+</head>
+<body>
+<resources asp-type="ScriptHeader"/>
+@await Component.InvokeAsync("Widget", new { widgetZone = "body_start_html_tag_after" })
+<a class="beh-skip-link" href="#beh-main-content">Saltar al contenido</a>
+
+<div id="app" v-cloak>
+    <div class="page-loader-container" aria-label="Cargando tienda BEH">
+        <div class="page-loader" aria-hidden="true">
+            <span>B</span><span>E</span><span>H</span>
+        </div>
+        <p class="page-loader-copy">Preparando tu oficina</p>
+    </div>
+    <partial name="Partials/Notifications"/>
+    <vc:get-coordinate></vc:get-coordinate>
+    <b-container fluid class="main-container">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "content_before" })
+        <div class="row">
+            <div class="left-side-container" v-bind:class="{ toggled : !menuToggled}">
+                <div class="container px-0">
+                    <partial name="Header"/>
+                    <div class="header-nav-bottom">
+                        <partial name="Partials/Logo"/>
+                        <div class="beh-search-cluster">
+                            @await Component.InvokeAsync("SearchBox")
+                            <nav class="beh-search-shortcuts" aria-label="Búsquedas frecuentes">
+                                <a href="/sillas-de-oficina">Sillas</a>
+                                <a href="/escritorios-y-estaciones">Escritorios</a>
+                                <a href="/search?q=tandem">Salas de espera</a>
+                                <a href="/accesorios-para-sillas">Accesorios</a>
+                            </nav>
+                        </div>
+                        <ul class="navbar-nav top-header-items">
+                            <template>
+                                <li class="nav-item">
+                                    <a class="nav-link" v-b-toggle.sidebar-right title="Mi cuenta" aria-label="Abrir mi cuenta">
+                                        <span class="icons icon-user"></span>
+                                        <span class="sr-only">Mi cuenta</span>
+                                    </a>
+                                    <template>
+                                        <b-sidebar id="sidebar-right" bg-variant="white" text-variant="standard" body-class="user-panel" title="@Loc["Account.MyAccount"]" right backdrop>
+                                            <partial name="Partials/HeaderLinks"/>
+                                        </b-sidebar>
+                                    </template>
+                                </li>
+                            </template>
+                            <partial name="Partials/ShoppingCartLinks"/>
+                        </ul>
+                    </div>
+                    <div class="top-menu-container">
+                        <div id="menu-toggler" class="menu-toggler d-lg-none d-flex" @@click="openMenu($event.target, 'mainMenu')">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div id="menu-button" @@click="menuButton()" v-bind:class="{ show: menuToggled }" class="menu-button d-lg-flex d-none">
+                            <span class="icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                            <span class="title">Productos</span>
+                        </div>
+                        <ul class="Menu -vertical" id="mainMenu">
+                            @await Component.InvokeAsync("Menu")
+                        </ul>
+                        <ul id="links-container" class="p-0 mb-0"></ul>
+                    </div>
+                    <aside class="beh-commerce-rail" aria-label="Condiciones de compra BEH">
+                        <span><strong>Compra en COP</strong> Precios claros para Colombia</span>
+                        <span><strong>Asesoría real</strong> Medidas, acabados y cantidades</span>
+                        <span><strong>Entrega coordinada</strong> Transporte, ensamble e instalación</span>
+                        <span><strong>Fabricación nacional</strong> Soporte directo de BEH</span>
+                    </aside>
+                </div>
+            </div>
+            <main class="container right-container" id="beh-main-content">
+                @if (IsSectionDefined("Breadcrumb"))
+                {
+                    @await RenderSectionAsync("Breadcrumb")
+                }
+                @if (Context.Request.Path.StartsWithSegments("/checkout"))
+                {
+                    <aside class="beh-checkout-notice" aria-label="Información importante de pago">
+                        <span>Compra coordinada</span>
+                        <strong>Tu pedido se confirma antes de cobrar.</strong>
+                        <p>BEH revisará disponibilidad, entrega, ensamble e instalación. Si eliges transferencia o anticipo, recibirás instrucciones únicamente desde nuestros canales oficiales.</p>
+                    </aside>
+                }
+                @RenderBody()
+            </main>
+        </div>
+        @await Component.InvokeAsync("Widget", new { widgetZone = "content_after" })
+    </b-container>
+    <div id="backdrop-menu" class="backdrop-menu"></div>
+    @await Component.InvokeAsync("Footer")
+    <partial name="Partials/Cookie"/>
+    <a class="beh-whatsapp-assist" href="https://wa.me/573103200976?text=Hola%20BEH,%20necesito%20asesor%C3%ADa%20para%20comprar%20en%20la%20tienda" target="_blank" rel="noopener" aria-label="Hablar con BEH por WhatsApp">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path d="M16.04 3.2c-7.05 0-12.8 5.64-12.8 12.58 0 2.22.6 4.38 1.72 6.27L3.2 28.8l6.94-1.75a12.95 12.95 0 0 0 5.9 1.43c7.06 0 12.8-5.64 12.8-12.58S23.1 3.2 16.04 3.2Zm0 22.95c-1.88 0-3.7-.5-5.3-1.45l-.38-.23-4.12 1.04 1.1-3.95-.25-.4a10.15 10.15 0 0 1-1.55-5.38c0-5.64 4.72-10.24 10.5-10.24 5.8 0 10.5 4.6 10.5 10.24 0 5.66-4.7 10.37-10.5 10.37Zm5.76-7.76c-.31-.16-1.86-.9-2.15-1-.29-.1-.5-.16-.72.16-.2.3-.82 1-.99 1.2-.18.2-.36.23-.67.07-.31-.15-1.32-.48-2.52-1.53-.93-.82-1.56-1.83-1.74-2.14-.18-.31-.02-.48.14-.63.14-.14.31-.36.47-.54.16-.18.2-.31.31-.52.1-.2.05-.39-.03-.54-.08-.15-.72-1.7-.99-2.33-.26-.62-.52-.53-.72-.54h-.62c-.2 0-.54.08-.82.39-.29.31-1.08 1.04-1.08 2.54 0 1.5 1.1 2.95 1.25 3.15.15.2 2.17 3.26 5.25 4.57.73.31 1.3.5 1.75.64.74.23 1.4.2 1.93.12.59-.09 1.86-.75 2.12-1.47.26-.72.26-1.34.18-1.47-.08-.13-.28-.2-.6-.36Z"/>
+        </svg>
+        <span>WhatsApp</span>
+    </a>
+</div>
+@await Component.InvokeAsync("Widget", new { widgetZone = "body_end_html_tag_before" })
+<partial name="Partials/ProductBoxVue"/>
+<resources asp-type="ScriptFooter"/>
+<resources asp-type="TemplateFooter"/>
+</body>
+</html>

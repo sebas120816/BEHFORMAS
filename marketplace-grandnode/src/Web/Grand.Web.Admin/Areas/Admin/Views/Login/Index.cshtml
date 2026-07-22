@@ -1,0 +1,91 @@
+﻿@model LoginModel
+@{
+    //page title
+    Layout = Constants.Layout_AdminLogin;
+}
+
+<form asp-route="AdminLogin" asp-area="@Constants.AreaAdmin" method="post">
+    <div class="beh-login-shell">
+        <section class="beh-login-intro" aria-label="Administración BEH">
+            <a href="/" class="beh-login-brand" aria-label="Volver a la tienda">
+                <img src="/Plugins/Theme.BehOffice/Content/images/beh/beh-logo.png" alt="BEH"/>
+            </a>
+            <div>
+                <span class="beh-login-kicker">Centro de operaciones</span>
+                <h1>La tienda, bajo control.</h1>
+                <p>Gestiona pedidos, productos, clientes, cobros y despachos desde un solo lugar.</p>
+            </div>
+            <small>Acceso exclusivo para el equipo autorizado de BEH.</small>
+        </section>
+        <div class="card beh-login-card">
+            <h5 class="card-header">
+                <strong>Ingresar al administrador</strong>
+                <span>Usa tu cuenta personal de trabajo.</span>
+            </h5>
+        <div class="card-body">
+            <div class="row">
+                <div asp-validation-summary="All" class="message-error text-center"></div>
+                <div class="col-12 form-group mb-0">
+                    @if (Model.UsernamesEnabled)
+                    {
+                        <div class="form-group row">
+                            <div class="col-lg-3 col-12 d-flex align-items-start justify-content-sm-start">
+                                <label asp-for="Username" class="h5 m-0">Usuario</label>
+                            </div>
+                            <div class="col-lg-9 col-12">
+                                <input asp-for="Username" class="form-control username" autofocus="autofocus"/>
+                                <span asp-validation-for="Username"></span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group row">
+                            <div class="col-lg-3 col-12 d-flex align-items-start justify-content-start">
+                                <label asp-for="Email" class="h5 m-0">Correo electrónico</label>
+                            </div>
+                            <div class="col-lg-9 col-12">
+                                <input asp-for="Email" class="form-control email" autofocus="autofocus"/>
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-12 d-flex align-items-center justify-content-start">
+                            <label asp-for="Password" class="h5 m-0">Contraseña</label>
+                        </div>
+                        <div class="col-lg-9 col-12">
+                            <input asp-for="Password" class="form-control password" autocomplete="off"/>
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                    </div>
+                    <div class="inputs d-flex flex-sm-row flex-column justify-content-center">
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" asp-for="RememberMe"/>
+                            <input class="custom-control-label" name="RememberMe" type="hidden" value="false">
+                            <span class="custom-control-label"></span>
+                            <span class="custom-control-description">Recordar este equipo</span>
+                        </label>
+                        <span class="ml-3 forgot-password">
+                            <a asp-route="PasswordRecovery">Recuperar contraseña</a>
+                        </span>
+                    </div>
+                    @if (Model.DisplayCaptcha)
+                    {
+                        <div class="captcha-box">
+                            <captcha/>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card-footer px-0">
+            <div class="buttons">
+                <button class="btn btn-info login-button px-5" type="submit">
+                    Ingresar de forma segura <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>

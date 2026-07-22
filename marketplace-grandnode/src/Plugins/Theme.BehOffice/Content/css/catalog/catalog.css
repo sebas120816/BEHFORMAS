@@ -1,0 +1,399 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   BEH Catalog — clases del Vue template: .beh-product-card
+   Extiende beh-office.css (no reemplaza)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Breadcrumb ─────────────────────────────────────────────────────── */
+.breadcrumb {
+    margin: 0;
+    padding: 12px 0 0;
+    font-size: .78rem;
+    color: var(--beh-muted);
+}
+.breadcrumb-item + .breadcrumb-item::before { color: var(--beh-muted); }
+.breadcrumb-item a { color: var(--beh-muted); text-decoration: none; }
+.breadcrumb-item a:hover { color: var(--beh-amber); }
+.breadcrumb-item.active { color: var(--beh-ink); font-weight: 600; }
+
+/* ── Sidebar izquierdo ───────────────────────────────────────────────── */
+#TwoColumns {
+    position: relative;
+    height: calc(100% - 57px);
+}
+.generalLeftSide:not(.show) {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+}
+.generalSideRight {
+    margin: 0 0 0 25%;
+    padding: 0 15px;
+    min-height: 500px;
+    z-index: 3;
+    transition: all .4s cubic-bezier(.645,.045,.355,1);
+}
+.generalLeftSide:not(.show) + .generalSideRight {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: 0;
+}
+.generalLeftSide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100% - 54px);
+    background: var(--beh-surface);
+    margin: 15px 0 0;
+    border: 1px solid var(--beh-line);
+    padding: 0 16px 16px;
+    opacity: 1;
+    visibility: visible;
+    direction: rtl;
+    z-index: 4;
+    transition: all .4s cubic-bezier(.645,.045,.355,1);
+}
+.generalLeftSide * { direction: ltr; }
+.generalLeftSide .modal-close {
+    top: -1px;
+    right: -1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--beh-line);
+    border-radius: var(--beh-radius);
+    outline: none;
+}
+.generalLeftSide .block h2.h5 {
+    margin: 15px 0;
+    font-size: .78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--beh-ink);
+}
+.generalLeftSide li a {
+    color: var(--beh-ink);
+    text-decoration: none;
+    font-size: .82rem;
+    display: flex;
+    padding-bottom: 9px;
+}
+.generalLeftSide li a:hover { color: var(--beh-amber); }
+.generalLeftSide li.active.last > a { color: var(--beh-amber); font-weight: 700; }
+.generalLeftSide li a .total { font-size: .7rem; opacity: .6; margin-left: 4px; }
+.generalLeftSide .available-items {
+    margin: 0 0 14px;
+    padding: 12px;
+    border: 1px solid var(--beh-line);
+    background: var(--beh-paper);
+}
+.generalLeftSide .available-items ul { margin: 0 0 5px; padding: 0; list-style: none; }
+.generalLeftSide .available-items ul .btn {
+    color: var(--beh-ink);
+    font-size: .78rem;
+    font-weight: 600;
+    background: var(--beh-surface);
+    border: 1px solid var(--beh-line);
+    border-radius: var(--beh-radius);
+}
+
+/* ── Barra de herramientas (sort / view) ─────────────────────────────── */
+.catalog-products-top .viewMode {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.catalog-products-top .btn-group .btn {
+    border: 1px solid var(--beh-line);
+    border-radius: var(--beh-radius);
+    background: var(--beh-surface);
+    color: var(--beh-ink);
+    font-size: .78rem;
+    font-weight: 600;
+}
+.catalog-products-top .btn-group .btn.active {
+    background: var(--beh-ink);
+    border-color: var(--beh-ink);
+    color: #fff;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PRODUCT GRID — Vue component genera .beh-product-card
+   ══════════════════════════════════════════════════════════════════════ */
+
+@keyframes behCardEnter {
+    from { opacity: 0; transform: translateY(10px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.product-grid .product-container { padding: 0 !important; }
+
+/* ── Tarjeta principal (.beh-product-card) ──────────────────────────── */
+.beh-product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%);
+    border: 1px solid rgba(28,39,51,.08);
+    border-radius: var(--beh-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(28,39,51,.05), inset 0 1px 0 rgba(255,255,255,.82);
+    animation: behCardEnter 650ms cubic-bezier(0.32, 0.72, 0, 1) both;
+    transition:
+        box-shadow 300ms cubic-bezier(0.32, 0.72, 0, 1),
+        transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.beh-product-card:hover {
+    box-shadow: 0 22px 56px rgba(28,39,51,.14), 0 0 0 1px rgba(28,39,51,.04);
+    transform: translateY(-6px) rotateX(1deg) rotateY(-1deg);
+    z-index: 2;
+}
+
+/* ── Imagen (.beh-product-card__media) ──────────────────────────────── */
+.beh-product-card__media {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(43,108,176,.12), transparent 44%),
+        linear-gradient(135deg, rgba(29,78,137,.06), transparent 44%),
+        var(--beh-paper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--beh-line);
+}
+
+/* Blueprint frame en hover */
+.beh-product-card__media::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    z-index: 2;
+    border: 1px solid rgba(28,39,51,.18);
+    opacity: 0;
+    transform: scale(.97);
+    transition: opacity 360ms cubic-bezier(0.32, 0.72, 0, 1), transform 360ms cubic-bezier(0.32, 0.72, 0, 1);
+    pointer-events: none;
+}
+.beh-product-card:hover .beh-product-card__media::before { opacity: 1; transform: scale(1); }
+
+/* Imagen principal */
+.beh-product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1), filter 280ms ease;
+    filter: drop-shadow(0 8px 18px rgba(28,39,51,.08));
+}
+.beh-product-card:hover .beh-product-card__img:not(.beh-product-card__img--hover) {
+    transform: scale(1.06);
+    filter: drop-shadow(0 14px 26px rgba(28,39,51,.15));
+}
+.beh-product-card__img--hover {
+    position: absolute;
+    inset: 0;
+    padding: 12px;
+    opacity: 0;
+    transition: opacity 320ms ease;
+}
+.beh-product-card:hover .beh-product-card__img--hover { opacity: 1; }
+
+/* Overlay "Ver referencia" en hover */
+.beh-product-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    background: linear-gradient(transparent 55%, rgba(28,39,51,.62));
+    opacity: 0;
+    transition: opacity 280ms ease;
+}
+.beh-product-card:hover .beh-product-card__overlay { opacity: 1; }
+
+.beh-product-card__cta {
+    color: #fff;
+    font-size: .74rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* Badge/flag */
+.beh-product-card__flag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 4;
+    padding: 4px 10px;
+    background: var(--beh-amber);
+    color: #fff;
+    font-size: .65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* ── Cuerpo (.beh-product-card__body) ───────────────────────────────── */
+.beh-product-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 18px 10px;
+    border-top: none;
+}
+
+/* Meta: SKU + categoría */
+.beh-product-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.beh-product-card__sku {
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: .65rem;
+    color: var(--beh-blueprint);
+    background: rgba(43,108,176,.08);
+    padding: 2px 6px;
+    border: 1px solid rgba(43,108,176,.2);
+    letter-spacing: .02em;
+}
+.beh-product-card__cat {
+    font-size: .62rem;
+    font-weight: 700;
+    color: var(--beh-muted);
+    text-transform: uppercase;
+}
+
+/* Nombre del producto */
+.beh-product-card__name {
+    margin: 0 0 10px;
+    font-size: .95rem;
+    font-weight: 800;
+    line-height: 1.3;
+    flex: 1;
+}
+.beh-product-card__name a {
+    color: var(--beh-ink);
+    text-decoration: none;
+    transition: color 160ms ease;
+}
+.beh-product-card__name a:hover { color: var(--beh-amber); }
+
+/* Tabla de specs mini */
+.beh-product-card__specs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 12px;
+    margin-bottom: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--beh-line);
+}
+.beh-product-card__spec-name {
+    font-size: .68rem;
+    color: var(--beh-muted);
+    font-weight: 500;
+}
+.beh-product-card__spec-val {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--beh-ink);
+    text-align: right;
+}
+
+/* Footer: precio + botón */
+.beh-product-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--beh-line);
+    margin-top: auto;
+}
+.beh-product-card__price {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+.beh-product-card__price strong {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--beh-ink);
+    line-height: 1;
+}
+.beh-product-card__price del {
+    font-size: .72rem;
+    color: var(--beh-muted);
+    font-weight: 400;
+}
+.beh-product-card__add {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--beh-ink);
+    border-radius: var(--beh-radius);
+    background: linear-gradient(135deg, var(--beh-ink), #2a4763);
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 10px 18px rgba(28,39,51,.14);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.beh-product-card__add:hover {
+    background: linear-gradient(135deg, var(--beh-amber), #f59e0b);
+    box-shadow: 0 16px 24px rgba(245,158,11,.24);
+    transform: translateY(-1px);
+}
+.beh-product-card__add:active { transform: scale(.95); }
+
+/* ── Vista lista ─────────────────────────────────────────────────────── */
+.product-list .beh-product-card {
+    flex-direction: row;
+}
+.product-list .beh-product-card__media {
+    width: 220px;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+}
+.product-list .beh-product-card__body {
+    border-top: 0;
+    border-left: 1px solid var(--beh-line);
+}
+
+/* ── Paginación scroll ───────────────────────────────────────────────── */
+.scroll-paginate {
+    padding: 28px 0;
+    text-align: center;
+    color: var(--beh-muted);
+    font-size: .82rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+    .generalSideRight { margin: 0; }
+    .generalLeftSide {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        max-height: 100%;
+        width: min(340px, 88vw);
+        margin: 0;
+        box-shadow: 8px 0 32px rgba(28,39,51,.18);
+    }
+    .product-list .beh-product-card { flex-direction: column; }
+    .product-list .beh-product-card__media { width: 100%; aspect-ratio: 4 / 3; }
+    .product-list .beh-product-card__body { border-left: none; border-top: 1px solid var(--beh-line); }
+}

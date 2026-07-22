@@ -1,0 +1,40 @@
+﻿@model FooterModel
+<footer class="beh-footer">
+    <div class="beh-footer__main">
+        <div class="beh-footer__brand">
+            <img src="/Plugins/Theme.BehOffice/Content/images/beh/beh-logo.png?v=20260722-2" width="240" height="70" alt="BEH Oficinas">
+            <p>Mobiliario corporativo, carpintería, divisiones y espacios de trabajo fabricados e instalados en Colombia.</p>
+            <a class="beh-footer__cta" href="https://behformas.com/#cotizador">Cotizar proyecto completo</a>
+        </div>
+        <div>
+            <h2>Comprar</h2>
+            <a href="/sillas-de-oficina">Ver productos</a>
+            <a href="/escritorios-y-estaciones">Escritorios y estaciones</a>
+            <a href="/search?q=tandem">Salas de espera</a>
+            <a href="@Url.RouteUrl("NewProducts")">Nuevas referencias</a>
+            <a href="@Url.RouteUrl("ShoppingCart")">Carrito</a>
+            <a href="@Url.RouteUrl("Wishlist")">Favoritos</a>
+        </div>
+        <div>
+            <h2>BEH Formas</h2>
+            <a href="https://behformas.com/">Página principal</a>
+            <a href="https://behformas.com/#wood-ai">Planeador inteligente</a>
+            <a href="https://behformas.com/#cotizador">Cotización por volumen</a>
+            <a href="https://behformas.com/#proyectos">Proyectos realizados</a>
+            <a href="/privacidad">Aviso de privacidad</a>
+            <a href="/terminos">Términos de compra</a>
+        </div>
+        <div>
+            <h2>Contacto</h2>
+            <span>@Model.CompanyPhone</span>
+            <span>@Model.CompanyEmail</span>
+            <span>@Model.CompanyAddress</span>
+            <span>@Model.CompanyHours</span>
+        </div>
+    </div>
+    <div class="beh-footer__bottom">
+        <span>© @DateTime.Now.Year BEH Formas y Arquitecturas</span>
+        <span>Precios en COP · Entrega e instalación según cobertura</span>
+    </div>
+    @await Component.InvokeAsync("Widget", new { widgetZone = "footer" })
+</footer>

@@ -1,0 +1,106 @@
+@inject IContextAccessor contextAccessor
+@model CheckoutCompletedModel
+@{
+    Layout = "_SingleColumn";
+}
+
+<div class="page checkout-page beh-completed-page">
+
+    <nav class="beh-checkout-progress" aria-label="Proceso de compra">
+        <span class="is-active"><b>1</b> Carrito</span>
+        <span class="is-active"><b>2</b> Datos y entrega</span>
+        <span class="is-active"><b>3</b> Confirmación</span>
+    </nav>
+
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_completed_top", additionalData = Model.OrderId })
+
+    <div class="beh-completed-hero">
+        <div class="beh-completed-hero__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/>
+                <polyline points="14,25 21,32 34,17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="beh-completed-hero__text">
+            <span class="beh-kicker">Pedido recibido</span>
+            <h1>Tu pedido está en manos de BEH.</h1>
+            <p>Número de pedido: <strong>#@Model.OrderNumber</strong></p>
+        </div>
+        <div class="beh-completed-hero__actions">
+            <a class="beh-completed-btn" href="@Url.RouteUrl("OrderDetails", new { orderId = Model.OrderId })">Ver detalle del pedido</a>
+            <a class="beh-completed-btn beh-completed-btn--secondary" href="/">Seguir explorando</a>
+        </div>
+    </div>
+
+    <!-- What happens next -->
+    <section class="beh-completed-next" aria-labelledby="beh-next-title">
+        <header>
+            <span class="beh-kicker">¿Qué sigue?</span>
+            <h2 id="beh-next-title">Así funciona el proceso BEH</h2>
+        </header>
+        <ol class="beh-completed-steps">
+            <li>
+                <span>01</span>
+                <div>
+                    <strong>Revisamos disponibilidad</strong>
+                    <p>En las próximas horas hábiles un asesor BEH confirma stock, tiempos de fabricación y disponibilidad de entrega para tu ciudad.</p>
+                </div>
+            </li>
+            <li>
+                <span>02</span>
+                <div>
+                    <strong>Coordinamos logística contigo</strong>
+                    <p>Validamos acceso al espacio, montaje e instalación. Si tu compra requiere trabajo en sitio, agendamos la visita técnica.</p>
+                </div>
+            </li>
+            <li>
+                <span>03</span>
+                <div>
+                    <strong>Te enviamos instrucciones de pago</strong>
+                    <p>Recibirás los datos bancarios únicamente desde <strong>@("@")behformas.com</strong> o nuestro WhatsApp oficial. Nunca desde formularios externos.</p>
+                </div>
+            </li>
+            <li>
+                <span>04</span>
+                <div>
+                    <strong>Producción y despacho</strong>
+                    <p>Una vez confirmado el anticipo, comenzamos fabricación o alistamiento. Te mantenemos al tanto de cada etapa.</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Security notice -->
+    <div class="beh-completed-security">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <polyline points="9,12 11,14 15,10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+            <strong>Sobre los datos de pago</strong>
+            <p>BEH nunca solicita pagos por canales no oficiales. Si recibes una solicitud de pago de un número o correo desconocido, repórtalo a <a href="mailto:hola@behformas.com">hola@behformas.com</a> antes de realizar cualquier transferencia.</p>
+        </div>
+    </div>
+
+    <!-- Contact support -->
+    <div class="beh-completed-contact">
+        <div>
+            <strong>¿Tienes preguntas sobre tu pedido?</strong>
+            <span>Puedes escribirnos directamente y un asesor te responde.</span>
+        </div>
+        <div class="beh-completed-contact__links">
+            <a href="https://wa.me/573103200976?text=Hola%20BEH,%20tengo%20una%20pregunta%20sobre%20mi%20pedido%20%23@Model.OrderNumber"
+               target="_blank" rel="noopener" class="beh-completed-contact__wa">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M16.04 3.2c-7.05 0-12.8 5.64-12.8 12.58 0 2.22.6 4.38 1.72 6.27L3.2 28.8l6.94-1.75a12.95 12.95 0 0 0 5.9 1.43c7.06 0 12.8-5.64 12.8-12.58S23.1 3.2 16.04 3.2Zm0 22.95c-1.88 0-3.7-.5-5.3-1.45l-.38-.23-4.12 1.04 1.1-3.95-.25-.4a10.15 10.15 0 0 1-1.55-5.38c0-5.64 4.72-10.24 10.5-10.24 5.8 0 10.5 4.6 10.5 10.24 0 5.66-4.7 10.37-10.5 10.37Z" fill="currentColor"/>
+                </svg>
+                WhatsApp BEH
+            </a>
+            <a href="mailto:hola@behformas.com" class="beh-completed-contact__email">
+                hola@behformas.com
+            </a>
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_completed_bottom", additionalData = Model.OrderId })
+</div>

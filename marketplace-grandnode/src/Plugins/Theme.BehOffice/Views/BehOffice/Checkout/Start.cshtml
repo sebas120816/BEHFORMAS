@@ -1,0 +1,267 @@
+@inject IPageHeadBuilder pagebuilder
+@model CheckoutModel
+@{
+    Layout = "_SingleColumn";
+
+    <script asp-location="Footer" asp-src="/theme/script/public.checkout.js" asp-order="300"></script>
+    <link rel="stylesheet" type="text/css" asp-src="/Plugins/Theme.BehOffice/Content/css/cart/cart.css">
+
+    <script asp-location="Footer" asp-order="301">
+        vmorder.vCartUrl.init('@Url.RouteUrl("ShoppingCartSummary")', '@Url.RouteUrl("ShoppingCartTotal")');
+        vmorder.vShipping.init('#co-shipping-form', '/checkout/SaveShipping/');
+        vmorder.vBilling.init('#co-billing-form', '/checkout/SaveBilling/');
+        vmorder.vShippingMethod.init('#co-shipping-method-form', '/checkout/SaveShippingMethod/');
+        vmorder.vPaymentMethod.init('#co-payment-method-form', '/checkout/SavePaymentMethod/');
+        vmorder.vPaymentInfo.init('#co-payment-info-form', '/checkout/SavePaymentInfo/');
+        vmorder.vConfirmOrder.init('/checkout/ConfirmOrder/', '@Url.RouteUrl("CheckoutCompleted")')
+    </script>
+
+    pagebuilder.AddTitleParts("Finalizar compra · BEH");
+
+    var shippingStepNum = 1;
+    var billingStepNum = 2;
+    var shippingMethodStepNum = 3;
+    var paymentMethodStepNum = 4;
+    var paymentInfoStepNum = 5;
+    var confirmStepNum = 6;
+    if (!Model.ShippingRequired)
+    {
+        billingStepNum = 1;
+        paymentMethodStepNum -= 2;
+        paymentInfoStepNum -= 2;
+        confirmStepNum -= 2;
+    }
+}
+
+<div class="page checkout-page beh-checkout-page">
+
+    <!-- Progress bar -->
+    <nav class="beh-checkout-progress" aria-label="Proceso de compra">
+        <span class="is-active"><b>1</b> Carrito</span>
+        <span class="is-active"><b>2</b> Datos y entrega</span>
+        <span><b>3</b> Confirmación</span>
+    </nav>
+
+    <!-- Page header -->
+    <header class="beh-checkout-header">
+        <div class="beh-checkout-header__inner">
+            <span class="beh-kicker">Compra coordinada BEH</span>
+            <h1>Finaliza tu pedido</h1>
+            <p>Completa tu información de entrega y elige el método de pago. Antes del despacho nuestro equipo validará logística, ensamble e instalación contigo.</p>
+        </div>
+        <div class="beh-checkout-header__notice">
+            <span>Compra sin riesgo</span>
+            <strong>Tu pedido se confirma antes de cobrar.</strong>
+            <small>Si eliges transferencia o anticipo, recibirás los datos únicamente desde canales oficiales BEH.</small>
+        </div>
+    </header>
+
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_content_before" })
+
+    <div class="beh-checkout-layout">
+        <!-- Steps column -->
+        <div class="beh-checkout-steps">
+            <div class="accordion opc" id="checkout-steps" role="tablist">
+
+                @if (Model.ShippingRequired)
+                {
+                    <div class="beh-opc-step">
+                        <div class="beh-opc-step__header" role="tab">
+                            <span class="beh-opc-step__num">@shippingStepNum</span>
+                            <strong>Dirección de entrega</strong>
+                        </div>
+                        <b-collapse id="opc-shipping" visible accordion="my-accordion" role="tabpanel" appear>
+                            <div class="beh-opc-step__body">
+                                <validation-observer v-slot="{ handleSubmit }">
+                                    <form action="" id="co-shipping-form" v-on:submit.prevent="handleSubmit(vmorder.formCheckoutSubmit)">
+                                        <div id="checkout-shipping-load">
+                                            <partial name="Partials/ShippingAddress" model="Model.ShippingAddress"/>
+                                        </div>
+                                        <input type="submit" ref="shippingSubmit" id="opc-shipping-submit" class="d-none"/>
+                                    </form>
+                                </validation-observer>
+                                <div class="beh-opc-step__actions" id="shipping-buttons-container">
+                                    <input type="button" class="beh-opc-btn" title="@Loc["Common.Continue"]"
+                                           @if (Model.ShippingAddress.ExistingAddresses.Any())
+                                           {
+                                               <text>@@click="vmorder.saveStep('vShipping', 'shippingSubmit', vm.$refs.shippingSelect.value === '')"</text>
+                                           }
+                                           else
+                                           {
+                                               <text>@@click="vmorder.saveStep('vShipping', 'shippingSubmit', true)"</text>
+                                           }
+                                           value="Continuar"/>
+                                    <span id="shipping-please-wait" class="beh-opc-wait" style="display:none;">Validando…</span>
+                                </div>
+                            </div>
+                        </b-collapse>
+                    </div>
+                }
+
+                <div class="beh-opc-step">
+                    <div class="beh-opc-step__header" role="tab">
+                        <span class="beh-opc-step__num">@billingStepNum</span>
+                        <strong>Datos de facturación</strong>
+                    </div>
+                    <b-collapse id="opc-billing"
+                                @if (!Model.ShippingRequired) { <text>visible</text> }
+                                accordion="my-accordion" role="tabpanel" appear>
+                        <div class="beh-opc-step__body">
+                            <validation-observer v-slot="{ handleSubmit }">
+                                <form id="co-billing-form" action="" v-on:submit.prevent="handleSubmit(vmorder.formCheckoutSubmit)">
+                                    <div id="checkout-billing-load">
+                                        @if (Model.ShippingRequired)
+                                        {
+                                            <partial name="Partials/BillingAddress" model="Model"/>
+                                        }
+                                        else
+                                        {
+                                            <partial name="Partials/BillingWithoutShipping" model="Model.BillingAddress"/>
+                                        }
+                                    </div>
+                                    <input type="submit" ref="billingSubmit" id="opc-billing-submit" class="d-none"/>
+                                </form>
+                            </validation-observer>
+                            <div class="beh-opc-step__actions" id="billing-buttons-container">
+                                @if (Model.ShippingRequired)
+                                {
+                                    <a class="beh-opc-btn beh-opc-btn--secondary" href="#" @@click="vmorder.backStep(vmorder.previousStep)">← Atrás</a>
+                                }
+                                <input type="button" class="beh-opc-btn"
+                                       @if (Model.BillingAddress.ExistingAddresses.Any())
+                                       {
+                                           <text>@@click="vmorder.saveStep('vBilling', 'billingSubmit', vm.$refs.billingSelect.value === '')"</text>
+                                       }
+                                       else
+                                       {
+                                           <text>@@click="vmorder.saveStep('vBilling', 'billingSubmit', true)"</text>
+                                       }
+                                       value="Continuar"/>
+                                <span class="beh-opc-wait" id="billing-please-wait" style="display:none;">Validando…</span>
+                            </div>
+                        </div>
+                    </b-collapse>
+                </div>
+
+                @if (Model.ShippingRequired)
+                {
+                    <div class="beh-opc-step">
+                        <div class="beh-opc-step__header" role="tab">
+                            <span class="beh-opc-step__num">@shippingMethodStepNum</span>
+                            <strong>Método de envío</strong>
+                        </div>
+                        <b-collapse id="opc-shipping-method" accordion="my-accordion" role="tabpanel" appear>
+                            <div class="beh-opc-step__body">
+                                <form id="co-shipping-method-form" action="">
+                                    <div id="checkout-shipping-method-load">
+                                        <partial name="Partials/ShippingMethods" model="Model"/>
+                                    </div>
+                                    <div class="beh-opc-step__actions" id="shipping-method-buttons-container">
+                                        <a class="beh-opc-btn beh-opc-btn--secondary" href="#" id="back-shipping_method" @@click="vmorder.backStep(vmorder.previousStep)">← Atrás</a>
+                                        <input type="button" class="beh-opc-btn" @@click="vmorder.saveStep('vShippingMethod', null, false)" value="Continuar"/>
+                                        <span id="shipping-method-please-wait" class="beh-opc-wait" style="display:none;">Validando…</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </b-collapse>
+                    </div>
+                }
+
+                <div class="beh-opc-step">
+                    <div class="beh-opc-step__header" role="tab">
+                        <span class="beh-opc-step__num">@paymentMethodStepNum</span>
+                        <strong>Método de pago</strong>
+                    </div>
+                    <b-collapse id="opc-payment-method" accordion="my-accordion" role="tabpanel" appear>
+                        <div class="beh-opc-step__body">
+                            <div class="beh-payment-notice">
+                                <span>Sobre el pago</span>
+                                <p>BEH opera con transferencia bancaria o anticipo coordinado. Los datos de pago se envían únicamente desde nuestro correo y WhatsApp oficiales, nunca desde formularios de terceros.</p>
+                            </div>
+                            <form action="" id="co-payment-method-form">
+                                <div id="checkout-payment-method-load">
+                                    <partial name="Partials/PaymentMethods" model="Model"/>
+                                </div>
+                            </form>
+                            <div class="beh-opc-step__actions" id="payment-method-buttons-container">
+                                <a class="beh-opc-btn beh-opc-btn--secondary" href="#" id="back-payment_method" @@click="vmorder.backStep(vmorder.previousStep)">← Atrás</a>
+                                <input type="button" class="beh-opc-btn" @@click="vmorder.saveStep('vPaymentMethod', null, false);vmorder.setDisabled(event)" value="Continuar"/>
+                                <span class="beh-opc-wait" id="payment-method-please-wait" style="display:none;">Validando…</span>
+                            </div>
+                        </div>
+                    </b-collapse>
+                </div>
+
+                <div class="beh-opc-step">
+                    <div class="beh-opc-step__header" role="tab">
+                        <span class="beh-opc-step__num">@paymentInfoStepNum</span>
+                        <strong>Información de pago</strong>
+                    </div>
+                    <b-collapse id="opc-payment-info" accordion="my-accordion" role="tabpanel" appear>
+                        <div class="beh-opc-step__body">
+                            <form action="" id="co-payment-info-form">
+                                <div id="checkout-payment-info-load">
+                                    <partial name="Partials/PaymentInfo"/>
+                                </div>
+                            </form>
+                            <div class="beh-opc-step__actions" id="payment-info-buttons-container">
+                                <a class="beh-opc-btn beh-opc-btn--secondary" href="#" id="back-payment_info" @@click="vmorder.backStep(vmorder.previousStep)">← Atrás</a>
+                                <input type="button" class="beh-opc-btn" @@click="vmorder.saveStep('vPaymentInfo', null, false)" value="Continuar"/>
+                                <span class="beh-opc-wait" id="payment-info-please-wait" style="display:none;">Validando…</span>
+                            </div>
+                        </div>
+                    </b-collapse>
+                </div>
+
+                <div class="beh-opc-step">
+                    <div class="beh-opc-step__header" role="tab">
+                        <span class="beh-opc-step__num">@confirmStepNum</span>
+                        <strong>Confirmar pedido</strong>
+                    </div>
+                    <b-collapse id="opc-confirm-order" accordion="my-accordion" role="tabpanel" appear>
+                        <div class="beh-opc-step__body">
+                            <div id="checkout-confirm-order-load">
+                                <partial name="Partials/ConfirmOrder"/>
+                            </div>
+                            <div id="confirm-order-buttons-container" class="beh-opc-step__actions">
+                                <span class="beh-opc-wait" id="confirm-order-please-wait" style="display:none;">Enviando pedido…</span>
+                            </div>
+                        </div>
+                    </b-collapse>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Order summary sidebar -->
+        <aside class="beh-checkout-summary" aria-label="Resumen de pedido">
+            <div class="beh-checkout-summary__inner">
+                <header class="beh-checkout-summary__header">
+                    <span>Resumen de pedido</span>
+                </header>
+                <div class="beh-checkout-summary__content">
+                    <partial name="Partials/Summary"/>
+                </div>
+            </div>
+
+            <!-- Trust block -->
+            <div class="beh-checkout-trust">
+                <div><strong>Sin sorpresas logísticas</strong><span>Confirmamos transporte, acceso y montaje antes del despacho.</span></div>
+                <div><strong>Atención comercial</strong><span>Tu pedido queda con el equipo BEH de punta a punta.</span></div>
+                <div><strong>Garantía directa</strong><span>Fabricación y posventa atendidas por BEH.</span></div>
+            </div>
+
+            <!-- WhatsApp support -->
+            <a class="beh-checkout-whatsapp"
+               href="https://wa.me/573103200976?text=Hola%20BEH,%20necesito%20ayuda%20con%20mi%20compra"
+               target="_blank" rel="noopener">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M16.04 3.2c-7.05 0-12.8 5.64-12.8 12.58 0 2.22.6 4.38 1.72 6.27L3.2 28.8l6.94-1.75a12.95 12.95 0 0 0 5.9 1.43c7.06 0 12.8-5.64 12.8-12.58S23.1 3.2 16.04 3.2Zm0 22.95c-1.88 0-3.7-.5-5.3-1.45l-.38-.23-4.12 1.04 1.1-3.95-.25-.4a10.15 10.15 0 0 1-1.55-5.38c0-5.64 4.72-10.24 10.5-10.24 5.8 0 10.5 4.6 10.5 10.24 0 5.66-4.7 10.37-10.5 10.37Zm5.76-7.76c-.31-.16-1.86-.9-2.15-1-.29-.1-.5-.16-.72.16-.2.3-.82 1-.99 1.2-.18.2-.36.23-.67.07-.31-.15-1.32-.48-2.52-1.53-.93-.82-1.56-1.83-1.74-2.14-.18-.31-.02-.48.14-.63.14-.14.31-.36.47-.54.16-.18.2-.31.31-.52.1-.2.05-.39-.03-.54-.08-.15-.72-1.7-.99-2.33-.26-.62-.52-.53-.72-.54h-.62c-.2 0-.54.08-.82.39-.29.31-1.08 1.04-1.08 2.54 0 1.5 1.1 2.95 1.25 3.15.15.2 2.17 3.26 5.25 4.57.73.31 1.3.5 1.75.64.74.23 1.4.2 1.93.12.59-.09 1.86-.75 2.12-1.47.26-.72.26-1.34.18-1.47-.08-.13-.28-.2-.6-.36Z"/>
+                </svg>
+                <span><strong>¿Tienes dudas?</strong> Habla con un asesor BEH por WhatsApp</span>
+            </a>
+        </aside>
+    </div>
+
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_content_after" })
+</div>

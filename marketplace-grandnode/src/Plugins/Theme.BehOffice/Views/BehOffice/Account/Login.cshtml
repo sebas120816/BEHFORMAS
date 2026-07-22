@@ -1,0 +1,138 @@
+﻿@model LoginModel
+@inject IPageHeadBuilder pagebuilder
+@{
+    Layout = "_SingleColumn";
+
+    //title
+    pagebuilder.AddTitleParts(Loc["Title.Login"]);
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register", new { returnUrl = Context.Request.Query["returnUrl"] });
+}
+<div class="page login-page beh-auth-page">
+    <header class="beh-auth-intro">
+        <span>Cuenta BEH</span>
+        <h1>Tu compra, cotizaciones y pedidos en un solo lugar.</h1>
+        <p>Ingresa para continuar una compra o consultar el historial de tus pedidos.</p>
+    </header>
+    <div class="beh-auth-layout">
+        <section class="beh-auth-panel">
+            @* login main block *@
+            <div>
+                <validation-observer v-slot="{ handleSubmit }">
+                    <form asp-route="Login" asp-route-returnurl="@HtmlExtensions.HtmlEncodeSafe(Context.Request.Query["ReturnUrl"])" ref="form" v-on:submit.prevent="handleSubmit(formSubmit)" method="post">
+                        <div class="card beh-auth-card">
+                            <div class="card-header">
+                                <span>Acceso de cliente</span>
+                                <h2>Iniciar sesión</h2>
+                            </div>
+                            <div class="card-body">
+                                <div asp-validation-summary="All" class="message-error w-100 text-center"></div>
+                                <div class="col-12 form-group mb-0">
+                                    @if (Model.UsernamesEnabled)
+                                    {
+                                        <div class="row form-group">
+                                            <div class="col-12 col-lg-3 d-flex align-items-start justify-content-sm-start">
+                                                <label asp-for="Username" class="col-form-label">@Loc["Account.Login.Fields.UserName"]:</label>
+                                            </div>
+                                            <div class="col-lg-9 col-12">
+                                                <validation-provider tag="div" rules="required" name="UserName" v-slot="{ errors, classes }">
+                                                    <input asp-for="Username" v-model="login.Username" v-bind:class="[classes , 'form-control']"/>
+                                                    <span class="field-validation-error">{{ errors[0] }}</span>
+                                                    <span asp-validation-for="Username"></span>
+                                                </validation-provider>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row form-group">
+                                            <div class="col-lg-3 col-12 d-flex align-items-start justify-content-start">
+                                                <label asp-for="Email" class="col-form-label">@Loc["Account.Login.Fields.Email"]:</label>
+                                            </div>
+                                            <div class="col-lg-9 col-12">
+                                                <validation-provider tag="div" rules="required|email" name="Email" v-slot="{ errors, classes }">
+                                                    <input asp-for="Email" v-model="login.Email" v-bind:class="[classes , 'form-control']"/>
+                                                    <span class="field-validation-error">{{ errors[0] }}</span>
+                                                    <span asp-validation-for="Email"></span>
+                                                </validation-provider>
+
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="row form-group">
+                                        <div class="col-lg-3 col-12 d-flex align-items-center justify-content-start">
+                                            <label asp-for="Password" class="col-form-label">@Loc["Account.Login.Fields.Password"]:</label>
+                                        </div>
+                                        <div class="col-lg-9 col-12">
+                                            <validation-provider tag="div" rules="required" name="Password" v-slot="{ errors, classes }">
+                                                <input asp-for="Password" v-model="login.Password" v-bind:class="[classes , 'form-control']"/>
+                                                <span class="field-validation-error">{{ errors[0] }}</span>
+                                                <span asp-validation-for="Password"></span>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="inputs d-flex flex-sm-row flex-column justify-content-center">
+                                        <label class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" asp-for="RememberMe"/>
+                                            <input class="custom-control-label" name="RememberMe" type="hidden" value="false">
+                                            <span class="custom-control-label"></span>
+                                            <span class="custom-control-description">@Loc["Account.Login.Fields.RememberMe"]</span>
+                                        </label>
+                                        <span class="ml-3 forgot-password">
+                                            <a asp-route="PasswordRecovery">@Loc["Account.Login.ForgotPassword"]</a>
+                                        </span>
+                                    </div>
+                                    @if (Model.DisplayCaptcha)
+                                    {
+                                        <div class="captcha-box">
+                                            <captcha/>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="buttons text-center">
+                                    <button class="btn btn-info login-button px-4" type="submit">Ingresar a mi cuenta</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </validation-observer>
+                <div class="external-authentication mt-3">
+                    @await Component.InvokeAsync("ExternalMethods")
+                </div>
+            </div>
+        </section>
+        <aside class="beh-auth-benefits">
+            <span>También puedes</span>
+            <h2>Crear una cuenta empresarial</h2>
+            <ul>
+                <li>Guardar direcciones y datos de facturación.</li>
+                <li>Consultar pedidos y documentos.</li>
+                <li>Repetir compras de mobiliario con mayor rapidez.</li>
+            </ul>
+            @if (Model.CheckoutAsGuest)
+            {
+                <div class="beh-auth-actions">
+                    <a class="btn btn-info register-button" href="@registerUrl">Crear cuenta</a>
+                    <a class="beh-auth-guest" href="@Url.RouteUrl("Checkout")">Continuar como invitado</a>
+                </div>
+            }
+            else
+            {
+                <a class="btn btn-info register-button" href="@registerUrl">Crear cuenta</a>
+            }
+            <small>¿Necesitas ayuda con una compra? <a href="https://wa.me/573103200976?text=Hola%20BEH,%20necesito%20ayuda%20con%20mi%20cuenta" target="_blank" rel="noopener">Habla con BEH</a>.</small>
+        </aside>
+    </div>
+</div>
+<script asp-location="Footer" asp-order="300">
+    var login = new Vue({
+        data: () => ({
+            Username: '',
+            Email: '',
+            Password: '',
+        })
+    });
+</script>

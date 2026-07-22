@@ -1,0 +1,16 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+  RequestHeader set Host "tienda.behformas.com"
+  RequestHeader set X-Forwarded-Host "tienda.behformas.com"
+  RequestHeader set X-Forwarded-Proto "https"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^App_Data(?:/|$) - [F,L,NC]
+  RewriteRule ^(?:start-production|install-watchdog|runtime-info)\.cgi$ - [F,L,NC]
+  RewriteRule ^(?:deploy-store|ensure-production|backup-store)\.sh$ - [F,L,NC]
+  RewriteRule ^\.(?:staging|deploying)(?:/|$) - [F,L,NC]
+  RewriteRule ^(.*)$ http://127.0.0.1:5080/$1 [P,L]
+</IfModule>

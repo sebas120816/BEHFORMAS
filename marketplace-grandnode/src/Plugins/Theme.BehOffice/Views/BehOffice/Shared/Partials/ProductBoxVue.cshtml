@@ -1,0 +1,75 @@
+<template id="product-box-vue" asp-footer="true">
+<article class="beh-product-card">
+    <a class="beh-product-card__media" :href="'/' + Model.SeName" :title="Model.DefaultPictureModel.Title" :aria-label="'Ver ' + Model.Name">
+        <b-img-lazy
+            :alt="Model.DefaultPictureModel.AlternateText"
+            class="beh-product-card__img"
+            :src="Model.DefaultPictureModel.ImageUrl"
+        ></b-img-lazy>
+        <template v-if="Model.SecondPictureModel.ImageUrl !== null">
+            <b-img-lazy
+                class="beh-product-card__img beh-product-card__img--hover"
+                :alt="Model.SecondPictureModel.AlternateText"
+                :src="Model.SecondPictureModel.ImageUrl"
+            ></b-img-lazy>
+        </template>
+        <div class="beh-product-card__overlay">
+            <span class="beh-product-card__cta">Ver referencia →</span>
+        </div>
+        <template v-if="Model.Flag !== null">
+            <div class="beh-product-card__flag" v-html="Model.Flag"></div>
+        </template>
+    </a>
+    <div class="beh-product-card__body">
+        <div class="beh-product-card__meta">
+            <code class="beh-product-card__sku" v-if="Model.ShowSku && Model.Sku !== null">{{ Model.Sku }}</code>
+            <span class="beh-product-card__cat" v-if="Model.ProductType == 0">Mobiliario</span>
+        </div>
+        <h3 class="beh-product-card__name">
+            <a :href="'/' + Model.SeName">{{ Model.Name }}</a>
+        </h3>
+        <div class="beh-product-card__specs" v-if="Model.SpecificationAttributeModels[0] !== null">
+            <template v-for="group in Model.SpecificationAttributeModels.slice(0,2)">
+                <template v-if="group[0] !== undefined">
+                    <span class="beh-product-card__spec-name">{{ group[0].SpecificationAttributeName }}</span>
+                    <span class="beh-product-card__spec-val" v-for="spec in group" v-html="spec.ValueRaw"></span>
+                </template>
+            </template>
+        </div>
+        <div class="beh-product-card__footer">
+            <div class="beh-product-card__price">
+                <template v-if="Model.ProductType != 40">
+                    <strong>{{ Model.ProductPrice.Price }}</strong>
+                    <del v-if="Model.ProductPrice.OldPrice !== null">{{ Model.ProductPrice.OldPrice }}</del>
+                </template>
+                <template v-else>
+                    <strong v-if="Model.ProductPrice.HighestBidValue > 0">{{ Model.ProductPrice.HighestBid }}</strong>
+                    <strong v-else>{{ Model.ProductPrice.StartPrice }}</strong>
+                </template>
+            </div>
+            <template v-if="!Model.ProductPrice.DisableBuyButton">
+                <template v-if="!Model.ShowQty">
+                    <button
+                        class="beh-product-card__add"
+                        :onclick="'AxiosCart.addproducttocart_catalog(`@Url.RouteUrl("AddProductCatalog")/' + Model.Id +'/1?quantity=1`, `' + Model.ShowQty +'`,`' + Model.Id + '`);return false;'"
+                        aria-label="Agregar al carrito"
+                    >+</button>
+                </template>
+                <template v-else>
+                    <button
+                        class="beh-product-card__add"
+                        :onclick="'AxiosCart.addproducttocart_catalog(`@Url.RouteUrl("AddProductCatalog")/' + Model.Id +'/1`, `' + Model.ShowQty +'`,`' + Model.Id + '`);return false;'"
+                        aria-label="Agregar al carrito"
+                    >+</button>
+                </template>
+            </template>
+        </div>
+    </div>
+</article>
+</template>
+<script asp-location="Footer" asp-order="118" type="module">
+    Vue.component('product-box-vue', {
+        template: '#product-box-vue',
+        props: { Model: Object },
+    });
+</script>

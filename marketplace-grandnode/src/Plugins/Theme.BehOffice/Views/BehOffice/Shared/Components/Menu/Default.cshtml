@@ -1,0 +1,39 @@
+﻿@model MenuModel
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
+@{
+    var behCategoryNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "Sillas de oficina",
+        "Sillas interlocutoras",
+        "Tándem y salas de espera",
+        "Escritorios y estaciones",
+        "Accesorios para sillas"
+    };
+    var rootCategories = Model.Categories.Where(category => behCategoryNames.Contains(category.Name)).ToList();
+}
+@foreach (var category in rootCategories)
+{
+    var categoryLineModel = new MenuModel.CategoryLineModel
+    {
+        Category = category
+    };
+    <partial name="Partials/CategoryLine.Menu" model="categoryLineModel"/>
+}
+@functions {
+    private bool ShouldDisplayMenu()
+    {
+        return Model.DisplaySearchMenu || Model.DisplayNewProductsMenu || Model.DisplayCustomerMenu || Model.DisplayBlogMenu || Model.DisplayContactUsMenu || Model.Pages.Any();
+    }
+}
+
+<li class="other-links">
+    <ul>
+        <li><a href="/sillas-de-oficina"><span class="title">Productos</span></a></li>
+        <li><a href="https://behformas.com/#servicios"><span class="title">Soluciones</span></a></li>
+        <li><a href="https://behformas.com/#wood-ai"><span class="title">Planeador IA</span></a></li>
+        <li><a href="https://behformas.com/#cotizador"><span class="title">Compra empresarial</span></a></li>
+        <li><a href="https://behformas.com/#proyectos"><span class="title">Proyectos</span></a></li>
+        <li><a href="@Url.RouteUrl("ContactUs")"><span class="title">Ayuda</span></a></li>
+    </ul>
+</li>
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_after" })

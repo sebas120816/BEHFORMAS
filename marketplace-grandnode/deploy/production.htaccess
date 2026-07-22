@@ -1,0 +1,22 @@
+Options -Indexes
+
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(dll|pdb|db|deps\.json|runtimeconfig\.json)$">
+    Require all denied
+  </FilesMatch>
+  <Files "Grand.Web">
+    Require all denied
+  </Files>
+  <FilesMatch "^(?:start-production|install-watchdog|runtime-info)\.cgi$">
+    Require all denied
+  </FilesMatch>
+  <FilesMatch "^(?:deploy-store|ensure-production|backup-store)\.sh$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^App_Data(?:/|$) - [F,L,NC]
+  RewriteRule ^\.(?:staging|deploying)(?:/|$) - [F,L,NC]
+</IfModule>

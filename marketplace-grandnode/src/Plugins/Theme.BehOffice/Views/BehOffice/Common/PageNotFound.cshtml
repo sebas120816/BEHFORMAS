@@ -1,0 +1,19 @@
+﻿@inject IPageHeadBuilder pagebuilder
+@{
+    Layout = "_SingleColumn";
+
+    //title
+    pagebuilder.AddTitleParts(Loc["Title.PageNotFound"]);
+}
+<div class="page page-not-found">
+    <div class="not-found-container">
+        <h1 class="top">404</h1>
+        <div class="bottom">No encontramos esta página</div>
+        <div class="content">
+            La referencia puede haber cambiado. Puedes volver al catálogo o pedir ayuda a nuestro equipo.
+        </div>
+        <a class="btn btn-primary mt-3" href="/">Volver a la tienda</a>
+        <a class="btn btn-outline-secondary mt-3" href="https://wa.me/573103200976?text=Hola%20BEH,%20necesito%20ayuda%20para%20encontrar%20un%20producto" target="_blank" rel="noopener">Pedir ayuda</a>
+    </div>
+    @await Component.InvokeAsync("PageBlock", new { systemName = "PageNotFound" })
+</div>

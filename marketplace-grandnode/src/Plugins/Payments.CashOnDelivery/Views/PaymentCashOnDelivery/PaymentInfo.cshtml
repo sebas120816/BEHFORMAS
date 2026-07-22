@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "";
+}
+@model Payments.CashOnDelivery.Models.PaymentInfoModel
+<div class="beh-manual-payment">
+    <span>Pago coordinado con BEH</span>
+    @Html.Raw(Model.DescriptionText)
+    <ul>
+        <li>No se realizará ningún cobro automático en este paso.</li>
+        <li>El pedido se registrará con estado de pago pendiente.</li>
+        <li>Verifica siempre que el contacto corresponda a los canales oficiales de BEH.</li>
+    </ul>
+</div>
