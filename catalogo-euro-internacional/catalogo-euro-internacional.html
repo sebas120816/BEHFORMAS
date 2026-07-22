@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euro Internacional — Catálogo de Sillería y Mobiliario 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10151f;
+    --ink-soft:#3a4250;
+    --paper:#f1f3f5;
+    --paper-card:#ffffff;
+    --line:#dde1e6;
+    --blue:#1d5fa8;
+    --blue-deep:#123a68;
+    --copper:#c1732f;
+    --copper-soft:#f2e2d1;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  /* blueprint grid texture */
+  .blueprint{
+    background-image:
+      linear-gradient(rgba(29,95,168,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,95,168,0.07) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  /* NAV */
+  header.nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(16,21,31,0.94);
+    backdrop-filter:blur(6px);
+    color:#f1f3f5;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{
+    max-width:1240px;margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:0.02em;font-size:17px;text-decoration:none;color:#fff;}
+  .brand .mark{
+    width:26px;height:26px;border-radius:50%;
+    border:2.5px solid var(--blue);
+    position:relative;flex:none;
+  }
+  .brand .mark::after{
+    content:"";position:absolute;left:50%;top:50%;
+    width:11px;height:2px;background:var(--blue);
+    transform:translate(-50%,-50%);
+  }
+  .brand .mark::before{
+    content:"";position:absolute;left:50%;top:50%;
+    width:2px;height:11px;background:var(--blue);
+    transform:translate(-50%,-50%);
+    display:none;
+  }
+  nav.links{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;font-family:var(--mono);}
+  nav.links a{text-decoration:none;color:#c7cdd6;transition:color .15s;white-space:nowrap;}
+  nav.links a:hover{color:#fff;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(180deg,#0d1220 0%,#14243f 55%,#1d5fa8 140%);
+    color:#fff;
+  }
+  .hero-inner{
+    max-width:1240px;margin:0 auto;padding:78px 28px 0;
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:20px;align-items:end;
+  }
+  .hero-copy{padding-bottom:70px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--copper);display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--copper);display:inline-block;}
+  .hero h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(38px,5.4vw,70px);line-height:1.02;letter-spacing:-0.01em;
+    margin:0 0 20px;
+  }
+  .hero h1 em{font-style:normal;color:var(--copper);}
+  .hero p.lead{font-size:16.5px;line-height:1.6;color:#cfd8e6;max-width:480px;margin:0 0 30px;}
+  .hero-stats{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.16);padding-top:20px;max-width:480px;}
+  .hero-stats div{flex:1;padding-right:16px;}
+  .hero-stats b{display:block;font-family:var(--display);font-size:24px;color:#fff;}
+  .hero-stats span{font-size:11.5px;color:#9fb0c8;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;}
+
+  .hero-art{position:relative;display:flex;align-items:flex-end;justify-content:center;}
+  .hero-art img{
+    max-height:560px;width:auto;margin:0 auto;
+    filter:drop-shadow(0 30px 40px rgba(0,0,0,0.45));
+    position:relative;z-index:2;
+  }
+  .callout{
+    position:absolute;font-family:var(--mono);font-size:11px;color:#dfe7f2;
+    background:rgba(13,18,32,0.55);border:1px solid rgba(255,255,255,0.18);
+    padding:5px 10px;border-radius:2px;white-space:nowrap;z-index:3;
+    backdrop-filter:blur(3px);
+  }
+  .callout::before{content:"";position:absolute;width:26px;height:1px;background:rgba(223,231,242,0.55);top:50%;}
+  .callout.left::before{right:100%;}
+  .callout.right::before{left:100%;}
+  .c1{top:8%; left:-2%;} .c1::before{right:100%;}
+  .c2{top:34%; right:-6%;} .c2::before{left:100%;}
+  .c3{top:62%; left:-8%;} .c3::before{right:100%;}
+  .c4{bottom:6%; right:-2%;} .c4::before{left:100%;}
+  .hero-grid-overlay{
+    position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask-image:linear-gradient(180deg, transparent, rgba(0,0,0,0.8) 40%, transparent 90%);
+            mask-image:linear-gradient(180deg, transparent, rgba(0,0,0,0.8) 40%, transparent 90%);
+  }
+
+  /* SECTION SCAFFOLDING */
+  section.cat{padding:74px 28px 20px;max-width:1240px;margin:0 auto;}
+  .cat-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:38px;flex-wrap:wrap;
+  }
+  .cat-num{font-family:var(--mono);color:var(--blue);font-size:13px;letter-spacing:.12em;margin-bottom:10px;display:block;text-transform:uppercase;}
+  .cat-head h2{font-family:var(--display);font-size:clamp(26px,3vw,38px);margin:0;letter-spacing:-0.01em;}
+  .cat-head p{font-size:14.5px;color:var(--ink-soft);max-width:420px;margin:0;line-height:1.55;}
+
+  /* PRODUCT GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-bottom:8px;}
+  .grid.small{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+
+  .card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:box-shadow .2s, transform .2s;
+  }
+  .card:hover{box-shadow:0 18px 34px rgba(16,21,31,0.10);transform:translateY(-2px);}
+  .card-img{
+    position:relative;
+    height:270px;
+    display:flex;align-items:center;justify-content:center;
+    background:
+      linear-gradient(rgba(29,95,168,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,95,168,0.05) 1px, transparent 1px),
+      #f8f9fa;
+    background-size:22px 22px, 22px 22px, auto;
+    padding:18px;
+  }
+  .card-img img{height:100%;width:auto;object-fit:contain;}
+  .badge{
+    position:absolute;top:10px;left:10px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;
+    background:var(--blue-deep);color:#fff;padding:4px 8px;border-radius:2px;
+  }
+  .card-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .card-body h3{font-family:var(--display);font-size:19px;margin:0;letter-spacing:-0.01em;}
+  .card-body .tagline{font-size:12.5px;color:var(--copper);font-family:var(--mono);text-transform:uppercase;letter-spacing:.03em;margin:-6px 0 2px;}
+  .feat{list-style:none;margin:0;padding:0;font-size:13px;color:var(--ink-soft);line-height:1.55;}
+  .feat li{padding-left:14px;position:relative;margin-bottom:3px;}
+  .feat li::before{content:"—";position:absolute;left:0;color:var(--blue);}
+  .card-foot{
+    margin-top:auto;padding-top:12px;border-top:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+  }
+  .warranty{font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+  .warranty b{color:var(--ink);}
+  .swatches{display:flex;gap:6px;}
+  .swatch{
+    width:18px;height:18px;border-radius:50%;cursor:pointer;
+    border:2px solid #fff;box-shadow:0 0 0 1px var(--line);
+    transition:box-shadow .15s;
+  }
+  .swatch.active{box-shadow:0 0 0 2px var(--blue);}
+  .swatch.negro{background:#1c1f24;}
+  .swatch.gris{background:#a9adb3;}
+  .swatch.blanco{background:#f2f2f2;}
+
+  /* multi-mech card (Hawai) */
+  .multi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+  .multi .m-item{background:#f8f9fa;padding:14px 10px 12px;text-align:center;}
+  .multi .m-item img{height:120px;margin:0 auto 8px;object-fit:contain;}
+  .multi .m-item span{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;color:var(--ink-soft);letter-spacing:.03em;}
+
+  /* note strip */
+  .note{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--copper-soft);border:1px solid #e6c8a4;border-radius:6px;
+    padding:14px 16px;margin:0 0 26px;font-size:13px;color:#5a3a17;line-height:1.55;
+  }
+  .note b{color:#8a4a12;}
+  .note .dot{width:8px;height:8px;border-radius:50%;background:var(--copper);margin-top:6px;flex:none;}
+
+  /* eco strip band */
+  .band{
+    background:var(--ink);color:#f1f3f5;
+    padding:60px 28px;margin-top:20px;
+  }
+  .band-inner{max-width:1240px;margin:0 auto;}
+  .band .cat-num{color:var(--copper);}
+  .band .cat-head{border-color:rgba(255,255,255,0.14);}
+  .band .cat-head p{color:#aab3c0;}
+  .band .card{background:#161c28;border-color:rgba(255,255,255,0.10);}
+  .band .card-img{background:#0f1420;background-image:none;}
+  .band .card-body h3{color:#fff;}
+  .band .feat{color:#aab3c0;}
+  .band .card-foot{border-color:rgba(255,255,255,0.14);}
+  .band .warranty b{color:#fff;}
+
+  /* footer */
+  footer{
+    background:var(--ink);color:#8a93a2;text-align:center;
+    padding:40px 28px 50px;font-size:12.5px;font-family:var(--mono);
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  footer strong{color:#fff;}
+
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr;padding-top:52px;}
+    .hero-art{order:-1;margin-bottom:20px;}
+    .hero-art img{max-height:340px;}
+    .callout{display:none;}
+    .hero-copy{padding-bottom:36px;}
+    nav.links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="mark"></span> EURO INTERNACIONAL</a>
+    <nav class="links">
+      <a href="#gerenciales">Gerenciales</a>
+      <a href="#operativa">Operativa</a>
+      <a href="#visita">Visita</a>
+      <a href="#eco">Línea Eco</a>
+      <a href="#espera">Sala de espera</a>
+      <a href="#mobiliario">Mobiliario</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Catálogo de producto — 2026</span>
+      <h1>Ingeniería del<br><em>asiento perfecto.</em></h1>
+      <p class="lead">Sillería ergonómica y mobiliario de oficina diseñado para el trabajo de largas jornadas: mecanismos autopesantes, mallas técnicas y estructuras certificadas, línea por línea.</p>
+      <div class="hero-stats">
+        <div><b>18+</b><span>Referencias de silla</span></div>
+        <div><b>7 años</b><span>Garantía máxima</span></div>
+        <div><b>4D</b><span>Ajuste de brazos</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <span class="callout c1 left">Espalda malla técnica</span>
+      <span class="callout c2 right">Mecanismo sincro autopesante</span>
+      <span class="callout c3 left">Apoyo lumbar graduable</span>
+      <span class="callout c4 right">Brazos 4D</span>
+      <img src="images/cover_main.png" alt="Silla ergonómica Euro Internacional">
+    </div>
+  </div>
+</section>
+
+<!-- ================= GERENCIALES ================= -->
+<section class="cat" id="gerenciales">
+  <div class="cat-head">
+    <div>
+      <span class="cat-num">01 — Gama alta</span>
+      <h2>Sillas gerenciales &amp; ejecutivas</h2>
+    </div>
+    <p>Mecanismos sincro autopesantes, espaldas en malla técnica y brazos 4D. Cada modelo está disponible en versión Presidente (con cabecero) y Gerente (sin cabecero), en marco negro o gris.</p>
+  </div>
+
+  <div class="note"><span class="dot"></span><div><b>Espalda exclusiva Euro Internacional.</b> Oslo y Oxford se fabrican en la misma planta que el modelo líder de la competencia, pero con espalda graduable en 10 posiciones y apoyo lumbar en 5 posiciones — un desarrollo exclusivo de nuestra línea.</div></div>
+
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-img"><span class="badge">7 AÑOS</span>
+        <img id="img-oslo" src="images/oslo_negro_presidente.png" alt="Silla Oslo"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla técnica</span>
+        <h3>Oslo</h3>
+        <ul class="feat">
+          <li>Sincro autopesante 4 bloqueos + slider de asiento</li>
+          <li>Espalda y lumbar graduables en altura por cremallera</li>
+          <li>Brazos 4D · cabecero 2D basculante (Presidente)</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>7 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('oslo','negro')"></span>
+            <span class="swatch gris" onclick="swap('oslo','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">7 AÑOS</span>
+        <img id="img-oxford" src="images/oxford_negro_presidente.png" alt="Silla Oxford"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla técnica</span>
+        <h3>Oxford</h3>
+        <ul class="feat">
+          <li>Sincro autopesante 4 bloqueos + slider de asiento</li>
+          <li>Apoyo lumbar punto a punto graduable en altura</li>
+          <li>Brazos 4D · cabecero 2D basculante (Presidente)</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>7 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('oxford','negro')"></span>
+            <span class="swatch gris" onclick="swap('oxford','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">5 AÑOS</span>
+        <img id="img-boston" src="images/boston_negro_presidente.png" alt="Silla Boston"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla técnica</span>
+        <h3>Boston</h3>
+        <ul class="feat">
+          <li>Sincro autopesante 4 bloqueos + slider de asiento</li>
+          <li>Apoyo lumbar punto a punto graduable en altura</li>
+          <li>Brazos 4D · cabecero 2D basculante (Presidente)</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>5 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('boston','negro')"></span>
+            <span class="swatch gris" onclick="swap('boston','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span>
+        <img id="img-derby" src="images/derby_negro_presidente.png" alt="Silla Derby"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla técnica</span>
+        <h3>Derby</h3>
+        <ul class="feat">
+          <li>Mecanismo sincro 4 posiciones, 4 bloqueos</li>
+          <li>Apoyo lumbar punto a punto graduable en altura</li>
+          <li>Brazos y cabecero graduables en altura</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>3 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('derby','negro')"></span>
+            <span class="swatch gris" onclick="swap('derby','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span>
+        <img id="img-hamburgo" src="images/hamburgo_negro_presidente.png" alt="Silla Hamburgo"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Base cromo</span>
+        <h3>Hamburgo</h3>
+        <ul class="feat">
+          <li>Mecanismo sincro de múltiples bloqueos</li>
+          <li>Apoyo lumbar y brazo graduables en altura</li>
+          <li>Ruedas piso duro 65 mm</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>3 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('hamburgo','negro')"></span>
+            <span class="swatch gris" onclick="swap('hamburgo','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">5–7 AÑOS</span>
+        <img id="img-blas" src="images/blas_negro_presidente.png" alt="Silla Blas"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla traslúcida</span>
+        <h3>Blas</h3>
+        <ul class="feat">
+          <li>Malla traslúcida en asiento y respaldo</li>
+          <li>Mecanismo basculante · lumbar y brazos fijos</li>
+          <li>Cabecero 2D graduable en altura y báscula</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía desde <b>5 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('blas','negro')"></span>
+            <span class="swatch gris" onclick="swap('blas','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3–7 AÑOS</span>
+        <img id="img-zurich" src="images/zurich_negro.png" alt="Silla Zurich"></div>
+      <div class="card-body">
+        <span class="tagline">Marco negro / gris · Malla traslúcida</span>
+        <h3>Zurich</h3>
+        <ul class="feat">
+          <li>Versión compacta de la familia Blas</li>
+          <li>Mecanismo basculante graduable</li>
+          <li>Ruedas nylon 60 mm</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía desde <b>3 años</b></span>
+          <div class="swatches">
+            <span class="swatch negro active" onclick="swap('zurich','negro')"></span>
+            <span class="swatch gris" onclick="swap('zurich','gris')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" style="grid-column:span 2;">
+      <div class="multi">
+        <div class="m-item"><img src="images/hawai_slider.png" alt="Hawai Slider"><span>Sincro slider</span></div>
+        <div class="m-item"><img src="images/hawai_sincro.png" alt="Hawai Sincro"><span>Sincro</span></div>
+        <div class="m-item"><img src="images/hawai_basculante.png" alt="Hawai Basculante"><span>Basculante</span></div>
+      </div>
+      <div class="card-body">
+        <span class="tagline">Marco blanco · Espalda malla gris</span>
+        <h3>Hawai — tres mecanismos, un mismo diseño</h3>
+        <ul class="feat">
+          <li>Espalda graduable en altura · apoyo lumbar 2D en altura y profundidad</li>
+          <li>Brazo graduable en altura · base cromo (blanca opcional)</li>
+          <li>Elige el mecanismo según el nivel de ajuste que necesites</li>
+        </ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>3 años</b></span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= OPERATIVA ================= -->
+<section class="cat" id="operativa">
+  <div class="cat-head">
+    <div>
+      <span class="cat-num">02 — Operativa</span>
+      <h2>Estela</h2>
+    </div>
+    <p>La operativa de mayor versatilidad de la línea: seis mecanismos y tres estilos de brazo para armar la configuración exacta que cada puesto de trabajo necesita.</p>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="card-img"><img src="images/estela_1.png" alt="Silla Estela vista frontal"></div>
+      <div class="card-body">
+        <span class="tagline">Altura alta H49x45</span>
+        <h3>Estela — vista frontal</h3>
+        <ul class="feat"><li>Espaldar alto, cilindro secretarial con telescopio</li></ul>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img"><img src="images/estela_2.png" alt="Silla Estela vista posterior"></div>
+      <div class="card-body">
+        <span class="tagline">Polipropileno de alto impacto</span>
+        <h3>Estela — vista posterior</h3>
+        <ul class="feat"><li>Espaldar interno y externo en polipropileno reforzado</li></ul>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img"><img src="images/estela_3.png" alt="Silla Estela vista lateral"></div>
+      <div class="card-body">
+        <span class="tagline">Altura media H40x42</span>
+        <h3>Estela — vista lateral</h3>
+        <ul class="feat"><li>Mecanismo y brazo a elegir: fijo, contacto, sincro perilla o cremallera</li></ul>
+      </div>
+    </article>
+  </div>
+  <div class="note" style="margin-top:22px;"><span class="dot"></span><div><b>Configurable a la medida.</b> Kit Fijo, Kit Contacto, Sincro Perilla (2 o 3 palancas) o Sincro Cremallera (2 o 3 palancas); brazos Beijín (fijo en T), Lisboa (graduable) o Sevilla (3D). Base nylon 60 cm, ruedas nylon 50 mm, garantía de 3 años.</div></div>
+</section>
+
+<!-- ================= VISITA ================= -->
+<section class="cat" id="visita">
+  <div class="cat-head">
+    <div>
+      <span class="cat-num">03 — Interlocutoras</span>
+      <h2>Sala de juntas &amp; visita</h2>
+    </div>
+    <p>Silla Int Granada: estructura negra plegable pensada para salas de formación y espacios que necesitan guardarse con facilidad.</p>
+  </div>
+  <div class="grid small">
+    <article class="card">
+      <div class="card-img"><span class="badge">4 AÑOS</span><img src="images/granada_ruedas.png" alt="Int Granada con ruedas"></div>
+      <div class="card-body">
+        <span class="tagline">Plegable</span>
+        <h3>Int Granada — con ruedas</h3>
+        <ul class="feat"><li>Brazos deslizantes · espalda en malla negra</li><li>Base con ruedas para reubicación ágil</li></ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>4 años</b></span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img"><span class="badge">4 AÑOS</span><img src="images/granada_sin_ruedas.png" alt="Int Granada sin ruedas"></div>
+      <div class="card-body">
+        <span class="tagline">Plegable</span>
+        <h3>Int Granada — base fija</h3>
+        <ul class="feat"><li>Brazos deslizantes · espalda en malla negra</li><li>Apilable y de fácil almacenamiento</li></ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>4 años</b></span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= LINEA ECO ================= -->
+<div class="band" id="eco">
+  <div class="band-inner">
+    <div class="cat-head">
+      <div>
+        <span class="cat-num">04 — Línea Eco</span>
+        <h2>Diseño funcional, precio competitivo</h2>
+      </div>
+      <p>Seis referencias pensadas para equipar oficinas completas sin sacrificar terminación: mecanismo basculante, graduación de altura y estructura cromada, en negro o blanco.</p>
+    </div>
+    <div class="grid small">
+      <article class="card">
+        <div class="card-img"><img src="images/eco_bilbao_negro_1.png" alt="Bilbao Eco"></div>
+        <div class="card-body"><span class="tagline">Malla negra / gris</span><h3>Bilbao Eco</h3>
+          <ul class="feat"><li>Presidente con cabecero · Gerente sin cabecero</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>6 meses</b></span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img"><img src="images/eco_capri_negro_1.png" alt="Capri Eco"></div>
+        <div class="card-body"><span class="tagline">Malla negra</span><h3>Capri Eco</h3>
+          <ul class="feat"><li>Presidente con cabecero · Gerente sin cabecero</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>6 meses</b></span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img"><img src="images/eco_atlanta_negro.png" alt="Atlanta Eco"></div>
+        <div class="card-body"><span class="tagline">Malla negra / gris</span><h3>Atlanta Eco</h3>
+          <ul class="feat"><li>Versión base y de interlocutora disponibles</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>6 meses</b></span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img"><img src="images/eco_espana_negro_1.png" alt="España Eco"></div>
+        <div class="card-body"><span class="tagline">Malla negra / gris</span><h3>España Eco</h3>
+          <ul class="feat"><li>Versión base y de interlocutora disponibles</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>6 meses</b></span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img"><img src="images/eco_dublin_negro.png" alt="Int Dublin Eco"></div>
+        <div class="card-body"><span class="tagline">Negro / blanco · Plegable</span><h3>Int Dublín Eco</h3>
+          <ul class="feat"><li>Asiento tapizado con brazos deslizantes</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>1 año</b></span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img"><img src="images/eco_risma.png" alt="Interlocutora Risma Eco"></div>
+        <div class="card-body"><span class="tagline">Sin tapizar</span><h3>Interlocutora Risma</h3>
+          <ul class="feat"><li>Estructura y plásticos negros, apilable</li></ul>
+          <div class="card-foot"><span class="warranty">Garantía <b>1 año</b></span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ESPERA ================= -->
+<section class="cat" id="espera">
+  <div class="cat-head">
+    <div>
+      <span class="cat-num">05 — Sala de espera</span>
+      <h2>Bancas Tandem</h2>
+    </div>
+    <p>Módulos de 2, 3 y 4 puestos en acero cromado. Disponibles en cascarón perforado o tapizados en cuero sintético negro, azul o café.</p>
+  </div>
+  <div class="grid small">
+    <article class="card">
+      <div class="card-img"><img src="images/tandem_cromo.png" alt="Tandem Junior Cromo"></div>
+      <div class="card-body"><span class="tagline">Cascarón perforado</span><h3>Junior Cromo Eco</h3>
+        <ul class="feat"><li>Estructura en acero cromado, 2 a 4 puestos</li></ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>2 años</b></span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img"><img src="images/tandem_todo_tapizado.png" alt="Tandem todo tapizado"></div>
+      <div class="card-body"><span class="tagline">Cuero sintético — negro / azul / café</span><h3>Junior — Todo tapizado</h3>
+        <ul class="feat"><li>Asiento y espalda totalmente tapizados</li></ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>2 años</b></span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img"><img src="images/tandem_tapizado_2partes.png" alt="Tandem tapizado 2 partes"></div>
+      <div class="card-body"><span class="tagline">Cuero sintético — negro / azul / café</span><h3>Junior — Tapizado 2 partes</h3>
+        <ul class="feat"><li>Combinación de cascarón y tapizado central</li></ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>2 años</b></span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= MOBILIARIO ================= -->
+<section class="cat" id="mobiliario">
+  <div class="cat-head">
+    <div>
+      <span class="cat-num">06 — Escritorios &amp; mobiliario</span>
+      <h2>El puesto de trabajo completo</h2>
+    </div>
+    <p>Del escritorio de altura eléctrica ajustable a las islas operativas y la biblioteca de almacenamiento: piezas para equipar la oficina de punta a punta.</p>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span>
+        <img id="img-digital" src="images/escritorio_digital_blanco.png" alt="Escritorio Digital"></div>
+      <div class="card-body">
+        <span class="tagline">Altura eléctrica ajustable</span>
+        <h3>Escritorio Digital</h3>
+        <ul class="feat">
+          <li>Mando digital, memoriza 3 posiciones de altura</li>
+          <li>Función anticolisión · rango 75–120 cm</li>
+          <li>Superficie 120x60 cm · blanco, negro o gris</li>
+        </ul>
+        <div class="card-foot">
+          <span class="warranty">Garantía <b>3 años</b></span>
+          <div class="swatches">
+            <span class="swatch blanco active" onclick="swap('digital','blanco')"></span>
+            <span class="swatch negro" onclick="swap('digital','negro')"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span><img src="images/escritorio_merliet.png" alt="Escritorio Merliet Ejecutivo"></div>
+      <div class="card-body">
+        <span class="tagline">Mueble en L · 180 o 200 cm</span>
+        <h3>Merliet Ejecutivo</h3>
+        <ul class="feat">
+          <li>Superficie ejecutiva con extensión lateral integrada</li>
+          <li>Acabado en madera cálida y base metálica</li>
+        </ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>3 años</b></span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span><img src="images/escritorio_kafka.png" alt="Escritorio Kafka Operativo"></div>
+      <div class="card-body">
+        <span class="tagline">120x60x75 cm</span>
+        <h3>Kafka Operativo</h3>
+        <ul class="feat">
+          <li>Un cajón y un compartimiento con puerta</li>
+          <li>Solución compacta para puestos individuales</li>
+        </ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>3 años</b></span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span><img src="images/isla_orama.png" alt="Isla Orama Operativa"></div>
+      <div class="card-body">
+        <span class="tagline">240x160x75 cm · 4 puestos</span>
+        <h3>Isla Orama</h3>
+        <ul class="feat">
+          <li>Estación operativa para 4 personas</li>
+          <li>Compartimiento de almacenamiento individual por puesto</li>
+        </ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>3 años</b></span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><span class="badge">3 AÑOS</span><img src="images/biblioteca_victoria.png" alt="Biblioteca Victoria"></div>
+      <div class="card-body">
+        <span class="tagline">200x40x200 cm</span>
+        <h3>Biblioteca Victoria</h3>
+        <ul class="feat">
+          <li>Módulos abiertos y cerrados combinados</li>
+          <li>Acabado en madera con acentos en color</li>
+        </ul>
+        <div class="card-foot"><span class="warranty">Garantía <b>3 años</b></span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <strong>EURO INTERNACIONAL</strong> — Catálogo de producto 2026 · Sillería ergonómica y mobiliario de oficina<br>
+  Asesoría comercial: 300 255 7463
+</footer>
+
+<script>
+  const paths = {
+    oslo:     {negro:"images/oslo_negro_presidente.png", gris:"images/oslo_gris_presidente.png"},
+    oxford:   {negro:"images/oxford_negro_presidente.png", gris:"images/oxford_gris_presidente.png"},
+    boston:   {negro:"images/boston_negro_presidente.png", gris:"images/boston_gris_presidente.png"},
+    derby:    {negro:"images/derby_negro_presidente.png", gris:"images/derby_gris_presidente.png"},
+    hamburgo: {negro:"images/hamburgo_negro_presidente.png", gris:"images/hamburgo_gris_presidente.png"},
+    blas:     {negro:"images/blas_negro_presidente.png", gris:"images/blas_gris_presidente.png"},
+    zurich:   {negro:"images/zurich_negro.png", gris:"images/zurich_gris.png"},
+    digital:  {blanco:"images/escritorio_digital_blanco.png", negro:"images/escritorio_digital_negro.png"}
+  };
+  function swap(key, color){
+    const img = document.getElementById('img-'+key);
+    if(img && paths[key] && paths[key][color]){ img.src = paths[key][color]; }
+    const card = img.closest('.card');
+    card.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
+    card.querySelector('.swatch.'+color).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
