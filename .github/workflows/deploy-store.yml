@@ -162,7 +162,21 @@ jobs:
           rm -f ./publish/App_Data/appsettings.Production.json
           rm -rf ./publish/App_Data/DataProtectionKeys
 
+      - name: Detect SSH deployment capability
+        id: ssh_capability
+        env:
+          STORE_SSH_HOST: ${{ secrets.STORE_SSH_HOST }}
+          STORE_SSH_USERNAME: ${{ secrets.STORE_SSH_USERNAME }}
+          STORE_SSH_PASSWORD: ${{ secrets.STORE_SSH_PASSWORD }}
+        run: |
+          if [ -n "$STORE_SSH_HOST" ] && [ -n "$STORE_SSH_USERNAME" ] && [ -n "$STORE_SSH_PASSWORD" ]; then
+            echo "has_ssh=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_ssh=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Prepare staging directories on server (avoid FTP path conflicts)
+        if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.STORE_SSH_HOST }}
@@ -181,7 +195,8 @@ jobs:
             mkdir -p "$STAGING/Plugins/Theme.BehOffice/Content/css/cart"
             mkdir -p "$STAGING/Plugins/Payments.CashOnDelivery"
 
-      - name: Upload build to .staging via FTP
+      - name: Upload build to .staging via FTP (SSH-enabled flow)
+        if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -193,13 +208,32 @@ jobs:
           log-level: verbose
           dangerous-clean-slate: false
 
+      - name: Upload build directly via FTP (fallback without SSH)
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./marketplace-grandnode/publish/
+          server-dir: ./tienda.behformas.com/
+          state-name: .ftp-deploy-sync-state-store-direct.json
+          log-level: verbose
+          dangerous-clean-slate: false
+
       - name: Swap .staging into place and restart (deploy-store.sh via SSH)
+        if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.STORE_SSH_HOST }}
           username: ${{ secrets.STORE_SSH_USERNAME }}
           password: ${{ secrets.STORE_SSH_PASSWORD }}
           script: /home/behforma/tienda.behformas.com/deploy-store.sh
+
+      - name: Notice when SSH secrets are missing
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        run: |
+          echo "SSH secrets are not configured. Used direct FTP fallback and skipped staging swap/restart step."
 
       - name: Verify the store responds after restart
         run: |
