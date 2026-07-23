@@ -1,0 +1,78 @@
+name: Deploy Store (GrandNode FTP)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'marketplace-grandnode/**'
+  workflow_dispatch:
+    inputs:
+      sync_database:
+        description: 'Reemplazar tambien beh-marketplace.db de produccion con la copia local (solo si produccion no tiene pedidos/clientes reales que perder)'
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: marketplace-grandnode
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Build Theme.BehOffice plugin (Release)
+        run: dotnet build src/Plugins/Theme.BehOffice/Theme.BehOffice.csproj -c Release
+
+      - name: Build Payments.CashOnDelivery plugin (Release)
+        run: dotnet build src/Plugins/Payments.CashOnDelivery/Payments.CashOnDelivery.csproj -c Release
+
+      - name: Verify commerce readiness
+        run: bash deploy/check-commerce-readiness.sh
+
+      - name: Publish Grand.Web (linux-x64, self-contained)
+        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained true -o ./publish
+
+      - name: Sync local catalog into production database (manual opt-in only)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.sync_database == 'true' }}
+        run: cp src/Web/Grand.Web/App_Data/beh-marketplace-dev.db ./publish/App_Data/beh-marketplace.db
+
+      - name: Strip local/dev-only files from publish output
+        run: |
+          rm -f ./publish/App_Data/beh-marketplace-dev.db
+          rm -f ./publish/App_Data/Settings.cfg
+          rm -f ./publish/App_Data/appsettings.Production.json
+          rm -rf ./publish/App_Data/DataProtectionKeys
+
+      - name: Upload build to .staging via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./marketplace-grandnode/publish/
+          server-dir: ./tienda.behformas.com/.staging/
+          state-name: .ftp-deploy-sync-state-store.json
+          dangerous-clean-slate: false
+
+      - name: Swap .staging into place and restart (deploy-store.sh via SSH)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.STORE_SSH_HOST }}
+          username: ${{ secrets.STORE_SSH_USERNAME }}
+          password: ${{ secrets.STORE_SSH_PASSWORD }}
+          script: /home/behforma/tienda.behformas.com/deploy-store.sh
+
+      - name: Verify the store responds after restart
+        run: |
+          sleep 10
+          curl --fail --max-time 20 -o /dev/null -s -w "tienda.behformas.com -> HTTP %{http_code}\n" https://tienda.behformas.com/
