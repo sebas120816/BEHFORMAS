@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
+      - '.github/workflows/deploy-store.yml'
       - 'marketplace-grandnode/**'
   workflow_dispatch:
     inputs:
@@ -30,10 +31,13 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      - name: Bootstrap build props (if missing)
+      - name: Bootstrap critical source files (if missing)
         run: |
-          mkdir -p src/Build
-          if [ ! -f src/Build/Grand.Common.props ]; then
+          APP_DIR="${GITHUB_WORKSPACE}/marketplace-grandnode"
+          if [ ! -d "$APP_DIR" ]; then APP_DIR="$PWD"; fi
+
+          mkdir -p "$APP_DIR/src/Build"
+          if [ ! -f "$APP_DIR/src/Build/Grand.Common.props" ]; then
             printf '%s\n' \
               '<Project>' \
               '  <PropertyGroup>' \
@@ -46,13 +50,88 @@ jobs:
               '  <ItemGroup>' \
               '    <Using Include="System.Text" />' \
               '  </ItemGroup>' \
-              '</Project>' > src/Build/Grand.Common.props
+              '</Project>' > "$APP_DIR/src/Build/Grand.Common.props"
+          fi
+
+          mkdir -p "$APP_DIR/src/Web/Grand.Web.Vendor/Models/Vendor"
+          if [ ! -f "$APP_DIR/src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs" ]; then
+            printf '%s\n' \
+              'using System.Collections.Generic;' \
+              'using Grand.Infrastructure.ModelBinding;' \
+              'using Grand.Infrastructure.Models;' \
+              'using Grand.Web.Common.Models;' \
+              'using Grand.Web.Vendor.Models.Common;' \
+              '' \
+              'namespace Grand.Web.Vendor.Models.Vendor;' \
+              '' \
+              'public class VendorModel : BaseEntityModel, ILocalizedModel<VendorLocalizedModel>' \
+              '{' \
+              '    public VendorModel()' \
+              '    {' \
+              '        Locales = new List<VendorLocalizedModel>();' \
+              '        Address = new AddressModel();' \
+              '    }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.Name")]' \
+              '    public string Name { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.Email")]' \
+              '    public string Email { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.Description")]' \
+              '    public string Description { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaKeywords")]' \
+              '    public string MetaKeywords { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaDescription")]' \
+              '    public string MetaDescription { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaTitle")]' \
+              '    public string MetaTitle { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.SeName")]' \
+              '    public string SeName { get; set; }' \
+              '' \
+              '    public AddressModel Address { get; set; }' \
+              '    public IList<VendorLocalizedModel> Locales { get; set; }' \
+              '}' \
+              '' \
+              'public class VendorLocalizedModel : ILocalizedModelLocal, ISlugModelLocal' \
+              '{' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.Name")]' \
+              '    public string Name { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.Description")]' \
+              '    public string Description { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaKeywords")]' \
+              '    public string MetaKeywords { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaDescription")]' \
+              '    public string MetaDescription { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.MetaTitle")]' \
+              '    public string MetaTitle { get; set; }' \
+              '' \
+              '    public string LanguageId { get; set; }' \
+              '' \
+              '    [GrandResourceDisplayName("Admin.Vendors.Fields.SeName")]' \
+              '    public string SeName { get; set; }' \
+              '}' > "$APP_DIR/src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs"
           fi
 
       - name: Preflight checks (critical source files)
         run: |
-          test -f src/Build/Grand.Common.props
-          test -f src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs
+          APP_DIR="${GITHUB_WORKSPACE}/marketplace-grandnode"
+          if [ ! -d "$APP_DIR" ]; then APP_DIR="$PWD"; fi
+
+          echo "Preflight APP_DIR: $APP_DIR"
+          ls -la "$APP_DIR/src/Build" || true
+          ls -la "$APP_DIR/src/Web/Grand.Web.Vendor/Models/Vendor" || true
+
+          test -f "$APP_DIR/src/Build/Grand.Common.props"
+          test -f "$APP_DIR/src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs"
 
       - name: Restore solution
         run: dotnet restore GrandNode.sln
