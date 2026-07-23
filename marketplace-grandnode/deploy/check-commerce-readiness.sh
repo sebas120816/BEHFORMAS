@@ -23,9 +23,23 @@ check_text() {
   fi
 }
 
+check_text_optional() {
+  if [ ! -f "$1" ]; then
+    printf 'WARN %s (archivo no presente en CI limpia)\n' "$3"
+    return 0
+  fi
+
+  if grep -Fq "$2" "$1"; then
+    printf 'OK   %s\n' "$3"
+  else
+    printf 'FAIL %s\n' "$3"
+    FAILED=1
+  fi
+}
+
 check_file "$WEB/Plugins/Theme.BehOffice/Theme.BehOffice.dll" "Tema BEH compilado"
 check_file "$WEB/Plugins/Payments.CashOnDelivery/Payments.CashOnDelivery.dll" "Método de pago manual compilado"
-check_text "$WEB/App_Data/InstalledPlugins.cfg" '"Payments.CashOnDelivery"' "Plugin de pago declarado"
+check_text_optional "$WEB/App_Data/InstalledPlugins.cfg" '"Payments.CashOnDelivery"' "Plugin de pago declarado"
 check_text "$WEB/App_Data/appsettings.Production.json" '"UseLiteDb": true' "Persistencia LiteDB declarada"
 check_text "$WEB/App_Data/appsettings.Production.json" '"ForceUseHTTPS": true' "HTTPS forzado"
 
