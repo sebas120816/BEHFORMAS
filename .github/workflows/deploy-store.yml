@@ -165,12 +165,14 @@ jobs:
       - name: Detect SSH deployment capability
         id: ssh_capability
         env:
+          DEPLOY_USE_SSH: ${{ vars.DEPLOY_USE_SSH }}
           STORE_SSH_HOST: ${{ secrets.STORE_SSH_HOST }}
           STORE_SSH_USERNAME: ${{ secrets.STORE_SSH_USERNAME }}
           STORE_SSH_PASSWORD: ${{ secrets.STORE_SSH_PASSWORD }}
           STORE_SSH_KEY: ${{ secrets.STORE_SSH_KEY }}
         run: |
-          if [ -n "$STORE_SSH_HOST" ] && [ -n "$STORE_SSH_USERNAME" ] && { [ -n "$STORE_SSH_PASSWORD" ] || [ -n "$STORE_SSH_KEY" ]; }; then
+          USE_SSH="${DEPLOY_USE_SSH,,}"
+          if [ "$USE_SSH" = "true" ] && [ -n "$STORE_SSH_HOST" ] && [ -n "$STORE_SSH_USERNAME" ] && { [ -n "$STORE_SSH_PASSWORD" ] || [ -n "$STORE_SSH_KEY" ]; }; then
             echo "has_ssh=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_ssh=false" >> "$GITHUB_OUTPUT"
@@ -179,7 +181,7 @@ jobs:
       - name: Notice deploy mode
         if: steps.ssh_capability.outputs.has_ssh != 'true'
         run: |
-          echo "SSH not available. Using direct FTP deploy mode (shared hosting)."
+          echo "SSH deploy disabled or unavailable. Using direct FTP deploy mode (shared hosting)."
 
       - name: Prepare staging directories on server (avoid FTP path conflicts)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
