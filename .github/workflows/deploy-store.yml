@@ -30,17 +30,25 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
+      - name: Preflight checks (critical source files)
+        run: |
+          test -f src/Build/Grand.Common.props
+          test -f src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs
+
+      - name: Restore solution
+        run: dotnet restore GrandNode.sln
+
       - name: Build Theme.BehOffice plugin (Release)
-        run: dotnet build src/Plugins/Theme.BehOffice/Theme.BehOffice.csproj -c Release
+        run: dotnet build src/Plugins/Theme.BehOffice/Theme.BehOffice.csproj -c Release --no-restore
 
       - name: Build Payments.CashOnDelivery plugin (Release)
-        run: dotnet build src/Plugins/Payments.CashOnDelivery/Payments.CashOnDelivery.csproj -c Release
+        run: dotnet build src/Plugins/Payments.CashOnDelivery/Payments.CashOnDelivery.csproj -c Release --no-restore
 
       - name: Verify commerce readiness
         run: bash deploy/check-commerce-readiness.sh
 
       - name: Publish Grand.Web (linux-x64, self-contained)
-        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained true -o ./publish
+        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained true --no-restore -o ./publish
 
       - name: Sync local catalog into production database (manual opt-in only)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.sync_database == 'true' }}

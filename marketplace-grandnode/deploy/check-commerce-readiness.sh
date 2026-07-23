@@ -29,6 +29,9 @@ check_text "$WEB/App_Data/InstalledPlugins.cfg" '"Payments.CashOnDelivery"' "Plu
 check_text "$WEB/App_Data/appsettings.Production.json" '"UseLiteDb": true' "Persistencia LiteDB declarada"
 check_text "$WEB/App_Data/appsettings.Production.json" '"ForceUseHTTPS": true' "HTTPS forzado"
 
+check_file "$ROOT/src/Build/Grand.Common.props" "Build props compartidos presentes"
+check_file "$ROOT/src/Web/Grand.Web.Vendor/Models/Vendor/VendorModel.cs" "Modelo Vendor del portal presente"
+
 if [ "$FAILED" -ne 0 ]; then
   exit 1
 fi
