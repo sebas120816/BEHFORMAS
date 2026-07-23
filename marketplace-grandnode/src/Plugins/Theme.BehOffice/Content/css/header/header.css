@@ -34,8 +34,8 @@
     cursor: pointer;
 }
 .navbar-nav.top-header-items  .nav-link:hover {
-    color: #1d4e89;
-    background: rgba(29,78,137,.08);
+    color: var(--beh-accent);
+    background: rgba(31,95,147,.10);
 }
 .navbar-nav.top-header-items .nav-link {
     position: relative;
@@ -62,9 +62,9 @@
     color: #fff;
     font-size: 12px;
     font-weight: 700;
-    background: linear-gradient(135deg, #1d4e89, #2b6cb0);
+    background: linear-gradient(135deg, var(--beh-accent), var(--beh-accent-2));
     border-radius: 100%;
-    box-shadow: 0 8px 18px rgba(29,78,137,.24);
+    box-shadow: 0 8px 18px rgba(31,95,147,.24);
 }
 .shopping-item .subtotal {
     position: relative;

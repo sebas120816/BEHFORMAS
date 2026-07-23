@@ -3,10 +3,12 @@
 
     const storageKey = "behRecentlyViewed";
     const productPage = document.querySelector(".product-details-page[data-beh-product]");
+    const fallbackImage = "/assets/images/no-image.png";
 
     const readHistory = () => {
         try {
-            return JSON.parse(localStorage.getItem(storageKey) || "[]");
+            const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
+            return Array.isArray(parsed) ? parsed : [];
         } catch {
             return [];
         }
@@ -22,12 +24,14 @@
 
     const rememberProduct = () => {
         if (!productPage) return;
+        const productPath = `${window.location.pathname}${window.location.search || ""}`;
         const item = {
-            name: productPage.dataset.behName,
-            url: window.location.pathname,
-            image: productPage.dataset.behImage,
+            name: (productPage.dataset.behName || "Producto BEH").trim(),
+            url: productPath,
+            image: (productPage.dataset.behImage || "").trim() || fallbackImage,
             price: productPage.dataset.behPrice
         };
+        if (!item.url) return;
         const items = readHistory().filter((entry) => entry.url !== item.url);
         writeHistory([item, ...items]);
     };
@@ -36,7 +40,10 @@
         const container = document.querySelector("[data-beh-recently-viewed]");
         if (!container) return;
         const currentPath = window.location.pathname;
-        const items = readHistory().filter((item) => item.url !== currentPath).slice(0, 4);
+        const items = readHistory()
+            .filter((item) => item && typeof item.url === "string" && item.url)
+            .filter((item) => item.url !== currentPath)
+            .slice(0, 4);
         if (!items.length) {
             container.closest(".beh-recently-viewed")?.remove();
             return;
@@ -51,9 +58,10 @@
 
             link.className = "beh-recent-product";
             link.href = item.url;
-            image.src = item.image;
-            image.alt = "";
+            image.src = item.image || fallbackImage;
+            image.alt = item.name || "Producto BEH";
             image.loading = "lazy";
+            image.decoding = "async";
             name.textContent = item.name;
             price.textContent = item.price || "Ver producto";
             copy.append(name, price);

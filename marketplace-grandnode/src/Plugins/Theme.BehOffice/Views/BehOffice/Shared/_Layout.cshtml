@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html use-lang="true">
+<html use-lang="true" class="no-js">
 <head>
     <title asp-default-title="true"></title>
     <meta charset="utf-8">
@@ -21,9 +21,10 @@
 <body>
 <resources asp-type="ScriptHeader"/>
 @await Component.InvokeAsync("Widget", new { widgetZone = "body_start_html_tag_after" })
+<script>document.documentElement.classList.remove('no-js');</script>
 <a class="beh-skip-link" href="#beh-main-content">Saltar al contenido</a>
 
-<div id="app" v-cloak>
+<div id="app" v-cloak role="document">
     <div class="page-loader-container" aria-label="Cargando tienda BEH">
         <div class="page-loader" aria-hidden="true">
             <span>B</span><span>E</span><span>H</span>
