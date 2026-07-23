@@ -30,6 +30,25 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
+      - name: Bootstrap build props (if missing)
+        run: |
+          mkdir -p src/Build
+          if [ ! -f src/Build/Grand.Common.props ]; then
+            printf '%s\n' \
+              '<Project>' \
+              '  <PropertyGroup>' \
+              '    <TargetFramework Condition="'"'"'$(TargetFramework)'"'"' == '"'"''"'"'">net9.0</TargetFramework>' \
+              '    <Nullable>enable</Nullable>' \
+              '    <ImplicitUsings>enable</ImplicitUsings>' \
+              '    <LangVersion>latest</LangVersion>' \
+              '    <Deterministic>true</Deterministic>' \
+              '  </PropertyGroup>' \
+              '  <ItemGroup>' \
+              '    <Using Include="System.Text" />' \
+              '  </ItemGroup>' \
+              '</Project>' > src/Build/Grand.Common.props
+          fi
+
       - name: Preflight checks (critical source files)
         run: |
           test -f src/Build/Grand.Common.props
