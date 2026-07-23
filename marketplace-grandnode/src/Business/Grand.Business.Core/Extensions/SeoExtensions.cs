@@ -5,6 +5,7 @@ using Grand.Domain.Catalog;
 using Grand.Domain.Localization;
 using Grand.Domain.Seo;
 using Grand.SharedKernel.Extensions;
+using System.Text;
 
 namespace Grand.Business.Core.Extensions;
 
