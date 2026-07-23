@@ -162,6 +162,25 @@ jobs:
           rm -f ./publish/App_Data/appsettings.Production.json
           rm -rf ./publish/App_Data/DataProtectionKeys
 
+      - name: Prepare staging directories on server (avoid FTP path conflicts)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.STORE_SSH_HOST }}
+          username: ${{ secrets.STORE_SSH_USERNAME }}
+          password: ${{ secrets.STORE_SSH_PASSWORD }}
+          script: |
+            set -e
+            STAGING="/home/behforma/tienda.behformas.com/.staging"
+            mkdir -p "$STAGING"
+
+            # If a file exists where a directory must exist, FTP deploy fails with 550.
+            if [ -f "$STAGING/Plugins/Theme.BehOffice/Content" ]; then
+              rm -f "$STAGING/Plugins/Theme.BehOffice/Content"
+            fi
+
+            mkdir -p "$STAGING/Plugins/Theme.BehOffice/Content/css/cart"
+            mkdir -p "$STAGING/Plugins/Payments.CashOnDelivery"
+
       - name: Upload build to .staging via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
@@ -171,6 +190,7 @@ jobs:
           local-dir: ./marketplace-grandnode/publish/
           server-dir: ./tienda.behformas.com/.staging/
           state-name: .ftp-deploy-sync-state-store.json
+          log-level: verbose
           dangerous-clean-slate: false
 
       - name: Swap .staging into place and restart (deploy-store.sh via SSH)

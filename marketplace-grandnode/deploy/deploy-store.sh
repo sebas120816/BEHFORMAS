@@ -17,6 +17,12 @@ done
 pkill -KILL -x Grand.Web >/dev/null 2>&1 || true
 
 if [ -d "$STAGING" ]; then
+  # Normalize known plugin paths in staging to avoid file-vs-directory conflicts.
+  if [ -f "$STAGING/Plugins/Theme.BehOffice/Content" ]; then
+    rm -f "$STAGING/Plugins/Theme.BehOffice/Content"
+  fi
+  mkdir -p "$STAGING/Plugins/Theme.BehOffice/Content/css/cart"
+
   cp -a "$STAGING/." "$APP_ROOT/"
   rm -rf "$STAGING"
 fi
