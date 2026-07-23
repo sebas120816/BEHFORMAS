@@ -149,7 +149,7 @@ jobs:
         run: bash deploy/check-commerce-readiness.sh
 
       - name: Publish Grand.Web (linux-x64, self-contained)
-        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained false --no-restore -o ./publish
+        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained false -p:UseAppHost=false --no-restore -o ./publish
 
       - name: Sync local catalog into production database (manual opt-in only)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.sync_database == 'true' }}
@@ -176,19 +176,17 @@ jobs:
             echo "has_ssh=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Require SSH secrets for safe deploy
+      - name: Notice deploy mode
         if: steps.ssh_capability.outputs.has_ssh != 'true'
         run: |
-          echo "ERROR: Missing SSH secrets."
-          echo "Required: STORE_SSH_HOST + STORE_SSH_USERNAME + (STORE_SSH_PASSWORD or STORE_SSH_KEY)."
-          echo "Direct FTP deploy is disabled because it can fail with '553 Text file busy' when files are in use."
-          exit 1
+          echo "SSH not available. Using direct FTP deploy mode (shared hosting)."
 
       - name: Prepare staging directories on server (avoid FTP path conflicts)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.STORE_SSH_HOST }}
+          port: ${{ secrets.STORE_SSH_PORT || '22' }}
           username: ${{ secrets.STORE_SSH_USERNAME }}
           password: ${{ secrets.STORE_SSH_PASSWORD }}
           key: ${{ secrets.STORE_SSH_KEY }}
@@ -219,11 +217,25 @@ jobs:
           log-level: verbose
           dangerous-clean-slate: false
 
+      - name: Upload build directly via FTP (shared hosting mode)
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./marketplace-grandnode/publish/
+          server-dir: ./tienda.behformas.com/
+          state-name: .ftp-deploy-sync-state-store-direct-${{ github.run_id }}.json
+          log-level: verbose
+          dangerous-clean-slate: false
+
       - name: Swap .staging into place and restart (deploy-store.sh via SSH)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.STORE_SSH_HOST }}
+          port: ${{ secrets.STORE_SSH_PORT || '22' }}
           username: ${{ secrets.STORE_SSH_USERNAME }}
           password: ${{ secrets.STORE_SSH_PASSWORD }}
           key: ${{ secrets.STORE_SSH_KEY }}
@@ -232,5 +244,8 @@ jobs:
 
       - name: Verify the store responds after restart
         run: |
+          if [ "${{ steps.ssh_capability.outputs.has_ssh }}" != "true" ]; then
+            echo "Skipping restart wait in shared hosting mode (no SSH restart step)."
+          fi
           sleep 10
           curl --fail --max-time 20 -o /dev/null -s -w "tienda.behformas.com -> HTTP %{http_code}\n" https://tienda.behformas.com/
