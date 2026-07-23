@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <!-- Many projects import this file and do not define TargetFramework locally. -->
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>
