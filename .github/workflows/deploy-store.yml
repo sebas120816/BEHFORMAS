@@ -168,12 +168,21 @@ jobs:
           STORE_SSH_HOST: ${{ secrets.STORE_SSH_HOST }}
           STORE_SSH_USERNAME: ${{ secrets.STORE_SSH_USERNAME }}
           STORE_SSH_PASSWORD: ${{ secrets.STORE_SSH_PASSWORD }}
+          STORE_SSH_KEY: ${{ secrets.STORE_SSH_KEY }}
         run: |
-          if [ -n "$STORE_SSH_HOST" ] && [ -n "$STORE_SSH_USERNAME" ] && [ -n "$STORE_SSH_PASSWORD" ]; then
+          if [ -n "$STORE_SSH_HOST" ] && [ -n "$STORE_SSH_USERNAME" ] && { [ -n "$STORE_SSH_PASSWORD" ] || [ -n "$STORE_SSH_KEY" ]; }; then
             echo "has_ssh=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_ssh=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Require SSH secrets for safe deploy
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        run: |
+          echo "ERROR: Missing SSH secrets."
+          echo "Required: STORE_SSH_HOST + STORE_SSH_USERNAME + (STORE_SSH_PASSWORD or STORE_SSH_KEY)."
+          echo "Direct FTP deploy is disabled because it can fail with '553 Text file busy' when files are in use."
+          exit 1
 
       - name: Prepare staging directories on server (avoid FTP path conflicts)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
@@ -182,6 +191,8 @@ jobs:
           host: ${{ secrets.STORE_SSH_HOST }}
           username: ${{ secrets.STORE_SSH_USERNAME }}
           password: ${{ secrets.STORE_SSH_PASSWORD }}
+          key: ${{ secrets.STORE_SSH_KEY }}
+          passphrase: ${{ secrets.STORE_SSH_PASSPHRASE }}
           script: |
             set -e
             STAGING="/home/behforma/tienda.behformas.com/.staging"
@@ -204,20 +215,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./marketplace-grandnode/publish/
           server-dir: ./tienda.behformas.com/.staging/
-          state-name: .ftp-deploy-sync-state-store.json
-          log-level: verbose
-          dangerous-clean-slate: false
-
-      - name: Upload build directly via FTP (fallback without SSH)
-        if: steps.ssh_capability.outputs.has_ssh != 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./marketplace-grandnode/publish/
-          server-dir: ./tienda.behformas.com/
-          state-name: .ftp-deploy-sync-state-store-direct.json
+          state-name: .ftp-deploy-sync-state-store-${{ github.run_id }}.json
           log-level: verbose
           dangerous-clean-slate: false
 
@@ -228,12 +226,9 @@ jobs:
           host: ${{ secrets.STORE_SSH_HOST }}
           username: ${{ secrets.STORE_SSH_USERNAME }}
           password: ${{ secrets.STORE_SSH_PASSWORD }}
+          key: ${{ secrets.STORE_SSH_KEY }}
+          passphrase: ${{ secrets.STORE_SSH_PASSPHRASE }}
           script: /home/behforma/tienda.behformas.com/deploy-store.sh
-
-      - name: Notice when SSH secrets are missing
-        if: steps.ssh_capability.outputs.has_ssh != 'true'
-        run: |
-          echo "SSH secrets are not configured. Used direct FTP fallback and skipped staging swap/restart step."
 
       - name: Verify the store responds after restart
         run: |
