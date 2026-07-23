@@ -7,4 +7,9 @@
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Shared types used throughout business services/parsers. -->
+    <Using Include="System.Text" />
+  </ItemGroup>
 </Project>
