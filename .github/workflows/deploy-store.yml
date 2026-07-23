@@ -136,6 +136,9 @@ jobs:
       - name: Restore solution
         run: dotnet restore GrandNode.sln
 
+      - name: Restore Grand.Web for linux-x64 publish
+        run: dotnet restore src/Web/Grand.Web/Grand.Web.csproj -r linux-x64
+
       - name: Build Theme.BehOffice plugin (Release)
         run: dotnet build src/Plugins/Theme.BehOffice/Theme.BehOffice.csproj -c Release --no-restore
 
@@ -146,7 +149,7 @@ jobs:
         run: bash deploy/check-commerce-readiness.sh
 
       - name: Publish Grand.Web (linux-x64, self-contained)
-        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained true --no-restore -o ./publish
+        run: dotnet publish src/Web/Grand.Web/Grand.Web.csproj -c Release -r linux-x64 --self-contained false --no-restore -o ./publish
 
       - name: Sync local catalog into production database (manual opt-in only)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.sync_database == 'true' }}
