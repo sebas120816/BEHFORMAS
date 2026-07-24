@@ -5,6 +5,8 @@ APP_ROOT="/home/behforma/tienda.behformas.com"
 STAGING="$APP_ROOT/.staging"
 LOCK="$APP_ROOT/.deploying"
 LOG="$APP_ROOT/App_Data/production.log"
+APP="$APP_ROOT/Grand.Web"
+APP_DLL="$APP_ROOT/Grand.Web.dll"
 
 touch "$LOCK"
 trap 'rm -f "$LOCK"' EXIT
@@ -45,4 +47,8 @@ export DOTNET_GCHeapHardLimitPOH="0x01000000"
 
 ulimit -s 1024 >/dev/null 2>&1 || true
 cd "$APP_ROOT"
-nohup setsid -f "$APP_ROOT/Grand.Web" >>"$LOG" 2>&1 </dev/null &
+if [ -x "$APP" ]; then
+  nohup setsid -f "$APP" >>"$LOG" 2>&1 </dev/null &
+elif [ -f "$APP_DLL" ]; then
+  nohup setsid -f dotnet "$APP_DLL" >>"$LOG" 2>&1 </dev/null &
+fi

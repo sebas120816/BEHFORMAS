@@ -2,6 +2,7 @@
 
 APP_ROOT="/home/behforma/tienda.behformas.com"
 APP="$APP_ROOT/Grand.Web"
+APP_DLL="$APP_ROOT/Grand.Web.dll"
 LOG="$APP_ROOT/App_Data/production.log"
 
 echo "Content-Type: text/plain"
@@ -30,7 +31,14 @@ ulimit -v unlimited >/dev/null 2>&1 || true
 ulimit -s 1024 >/dev/null 2>&1 || true
 
 cd "$APP_ROOT" || exit 1
-nohup setsid -f "$APP" >>"$LOG" 2>&1 </dev/null &
+if [ -x "$APP" ]; then
+  nohup setsid -f "$APP" >>"$LOG" 2>&1 </dev/null &
+elif [ -f "$APP_DLL" ]; then
+  nohup setsid -f dotnet "$APP_DLL" >>"$LOG" 2>&1 </dev/null &
+else
+  echo "GrandNode binary not found (Grand.Web / Grand.Web.dll)."
+  exit 1
+fi
 sleep 8
 
 PID="$(pgrep -x Grand.Web | head -n 1)"
