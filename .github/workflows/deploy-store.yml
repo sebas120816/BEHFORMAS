@@ -162,14 +162,6 @@ jobs:
           rm -f ./publish/App_Data/appsettings.Production.json
           rm -rf ./publish/App_Data/DataProtectionKeys
 
-      - name: Prepare web restart endpoint payload (shared hosting)
-        if: steps.ssh_capability.outputs.has_ssh != 'true'
-        run: |
-          TOKEN="$(openssl rand -hex 32)"
-          echo "DEPLOY_RESTART_TOKEN=$TOKEN" >> "$GITHUB_ENV"
-          cp deploy/start-production.php ./publish/start-production.php
-          printf '%s\n' "$TOKEN" > ./publish/.beh-deploy-token
-
       - name: Detect SSH deployment capability
         id: ssh_capability
         env:
@@ -185,6 +177,14 @@ jobs:
           else
             echo "has_ssh=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Prepare web restart endpoint payload (shared hosting)
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        run: |
+          TOKEN="$(openssl rand -hex 32)"
+          echo "DEPLOY_RESTART_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+          cp deploy/start-production.php ./publish/start-production.php
+          printf '%s\n' "$TOKEN" > ./publish/.beh-deploy-token
 
       - name: Notice deploy mode
         if: steps.ssh_capability.outputs.has_ssh != 'true'
