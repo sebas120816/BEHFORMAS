@@ -232,6 +232,20 @@ jobs:
           log-level: verbose
           dangerous-clean-slate: false
 
+      - name: Try restart via CGI endpoint (shared hosting mode)
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        env:
+          STORE_START_CGI_URL: ${{ vars.STORE_START_CGI_URL }}
+        continue-on-error: true
+        run: |
+          START_URL="$STORE_START_CGI_URL"
+          if [ -z "$START_URL" ]; then
+            START_URL="https://tienda.behformas.com/start-production.cgi"
+          fi
+
+          echo "Calling restart endpoint: $START_URL"
+          curl --fail --max-time 90 "$START_URL"
+
       - name: Swap .staging into place and restart (deploy-store.sh via SSH)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
         uses: appleboy/ssh-action@v1.0.3
