@@ -162,6 +162,14 @@ jobs:
           rm -f ./publish/App_Data/appsettings.Production.json
           rm -rf ./publish/App_Data/DataProtectionKeys
 
+      - name: Prepare web restart endpoint payload (shared hosting)
+        if: steps.ssh_capability.outputs.has_ssh != 'true'
+        run: |
+          TOKEN="$(openssl rand -hex 32)"
+          echo "DEPLOY_RESTART_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+          cp deploy/start-production.php ./publish/start-production.php
+          printf '%s\n' "$TOKEN" > ./publish/.beh-deploy-token
+
       - name: Detect SSH deployment capability
         id: ssh_capability
         env:
@@ -232,19 +240,19 @@ jobs:
           log-level: verbose
           dangerous-clean-slate: false
 
-      - name: Try restart via CGI endpoint (shared hosting mode)
+      - name: Try restart via PHP endpoint (shared hosting mode)
         if: steps.ssh_capability.outputs.has_ssh != 'true'
         env:
-          STORE_START_CGI_URL: ${{ vars.STORE_START_CGI_URL }}
+          STORE_START_PHP_URL: ${{ vars.STORE_START_PHP_URL }}
         continue-on-error: true
         run: |
-          START_URL="$STORE_START_CGI_URL"
+          START_URL="$STORE_START_PHP_URL"
           if [ -z "$START_URL" ]; then
-            START_URL="https://tienda.behformas.com/start-production.cgi"
+            START_URL="https://tienda.behformas.com/start-production.php"
           fi
 
           echo "Calling restart endpoint: $START_URL"
-          curl --fail --max-time 90 "$START_URL"
+          curl --fail --max-time 90 -H "X-Deploy-Key: $DEPLOY_RESTART_TOKEN" "$START_URL"
 
       - name: Swap .staging into place and restart (deploy-store.sh via SSH)
         if: steps.ssh_capability.outputs.has_ssh == 'true'
